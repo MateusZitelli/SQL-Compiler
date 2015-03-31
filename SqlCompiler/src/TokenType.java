@@ -1,3 +1,8 @@
+/*Nome: Token.java
+ *Descrição: ENUM que definem as expressões regulares que serão reconhecidas. 
+ *Autores: João Flávio e...
+ * 
+ */
 public enum TokenType {
 	
 	digit("-?[0-9]+"),

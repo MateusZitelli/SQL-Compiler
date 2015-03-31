@@ -1,3 +1,9 @@
+/*Nome: Token.java
+ *Descrição: Classe responsável por guardar a estrutura do TOKEN. 
+ *Autores: João Flávio e...
+ * 
+ */
+
 public class Token {
 	
 	 public TokenType type;

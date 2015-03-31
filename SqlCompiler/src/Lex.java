@@ -1,3 +1,8 @@
+/*Nome: Lex.java
+ *Descrição: Classe que "constrói" o analisador léxico em si.
+ *Autores: João Flávio e...
+ * 
+ */
 import java.util.ArrayList;
 
 
