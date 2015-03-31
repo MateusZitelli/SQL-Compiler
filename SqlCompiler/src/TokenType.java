@@ -1,4 +1,4 @@
-/*Nome: Token.java
+/*Nome: TokenType.java
  *Descrição: ENUM que definem as expressões regulares que serão reconhecidas. 
  *Autores: João Flávio e...
  * 
