@@ -11,9 +11,7 @@ public class Lex {
 	public static ArrayList<Token> lex (String input){
 		//Os tokens que vão ser retornados
 		ArrayList<Token> tokens = new ArrayList<Token>();
-		
 		return tokens;
-		
 	}
 
 	public static void main(String[] args) {

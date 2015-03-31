@@ -5,9 +5,8 @@
  */
 public enum TokenType {
 	
-	digit("-?[0-9]+"),
+	number("-?[0-9]+(.[0-9])"),
 	espaco("[ \t\f\r\n]+");
-	
 		
 	public String pattern;
 	
