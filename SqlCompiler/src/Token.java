@@ -1,6 +1,6 @@
 /*Nome: Token.java
- *DescriÁ„o: Classe respons·vel por guardar a estrutura do TOKEN. 
- *Autores: Jo„o Fl·vio e...
+ *Descri√ß√£o: Classe respons√°vel por guardar a estrutura do TOKEN. 
+ *Autores: Jo√£o Fl√°vio e...
  * 
  */
 

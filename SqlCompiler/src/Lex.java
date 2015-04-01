@@ -1,6 +1,6 @@
 /*Nome: Lex.java
- *DescriÁ„o: Classe que "constrÛi" o analisador lÈxico em si.
- *Autores: Jo„o Fl·vio e...
+ *Descri√ß√£o: Classe que "constr√≥i" o analisador l√©xico em si.
+ *Autores: Jo√£o Fl√°vio e...
  * 
  */
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Lex {
 
 	public static ArrayList<Token> lex (String input){
-		//Os tokens que v„o ser retornados
+		//Os tokens que v√£o ser retornados
 		ArrayList<Token> tokens = new ArrayList<Token>();
 		return tokens;
 	}
