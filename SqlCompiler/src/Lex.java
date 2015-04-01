@@ -56,6 +56,7 @@ public class Lex {
     public static String preProcess(String input) {
         // add an extra \s to the tokenizer recognize as an new command
         input = input.replace(";", " ;");
+        return input;
     }
 
 	public static void main(String[] args) {
@@ -71,7 +72,7 @@ public class Lex {
 			
 			
 		} catch (FileNotFoundException e) {
-			System.err.println("Impossível ler o arquivo.");
+			System.err.println("ImpossÃ­vel ler o arquivo.");
 		}
 		
 	}
