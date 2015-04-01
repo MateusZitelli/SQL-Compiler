@@ -4,14 +4,21 @@
  * 
  */
 public enum TokenType {
-	
 	// The order of the tokens implies in precedence
-	
 	CREATE("^(?i)(create)$"), 
     DATABASE("^(?i)(database)$"), 
     ALTER("^(?i)(alter)$"), 
+    ADD("^(?i)(add)$"),
+    RENAME("^(?i)(rename)$"),
+    MODIFY("^(?i)(modify)$"),
+    DROP("^(?i)(drop)$"), 
+    TRUNCATE("^(?i)(truncate)$"), 
     TABLE("^(?i)(table)$"),
     SELECT("^(?i)(select)$"),
+    DELETE("^(?i)(delete)$"),
+    INSERT("^(?i)(insert)$"),
+    INTO("^(?i)(into)$"),
+    VALUES("^(?i)(values)$"),
     WHERE("^(?i)(where)$"),
     FROM("^(?i)(from)$"),
     USE("^(?i)(use)$"), 
