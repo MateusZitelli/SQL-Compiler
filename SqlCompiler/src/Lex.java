@@ -53,13 +53,17 @@ public class Lex {
         return tokens;
 	}
 
+    public static String preProcess(String input) {
+        // add an extra \s to the tokenizer recognize as an new command
+        input = input.replace(";", " ;");
+    }
+
 	public static void main(String[] args) {
 		//String input = "9213123123 23838 12 SELECT select from FROM";
-		
 		try {
 			
 			String  arquivo = LeitorArquivo.readFile();
-			ArrayList<Token> tokens = getTokens(arquivo);
+			ArrayList<Token> tokens = getTokens(preProcess(arquivo));
 			
 			for (Token token : tokens){
 				System.out.println(token);
