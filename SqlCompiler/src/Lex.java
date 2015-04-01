@@ -55,8 +55,7 @@ public class Lex {
 
     public static String preProcess(String input) {
         // add an extra \s to the tokenizer recognize as an new command
-        input = input.replace(";", " ;");
-        return input;
+        return input.replaceAll("(;|=|<>|>|<|<=|>=|\\*|\\(|\\)|'|\\\"|,)", " $1 ");
     }
 
 	public static void main(String[] args) {
