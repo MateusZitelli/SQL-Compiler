@@ -43,7 +43,6 @@ public class Lex {
 
         for(String command : splitedInput) {
             Token token = getToken(command);
-            System.out.println(token);
             if(token != null) {
                 tokens.add(token);
             }
@@ -53,7 +52,7 @@ public class Lex {
 	}
 
 	public static void main(String[] args) {
-		String input = "9213123123 23838 12";
+		String input = "CREATE DATABASE test ;";
 		ArrayList<Token> tokens = getTokens(input);
 		
 		for (Token token : tokens){
