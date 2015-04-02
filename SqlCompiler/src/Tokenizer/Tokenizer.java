@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Lex {
+public class Tokenizer {
     // Stores if the lex is ok without erros
     public static boolean ok = true;
 
@@ -38,8 +38,14 @@ public class Lex {
         return null;
     }
 
+    public static String preProcess(String input) {
+        // add extra " " after and before some symbols to the tokenizer recognize as an new command
+        return input.replaceAll("(;|=|<>|>|<|<=|>=|\\*|\\(|\\)|'|\\\"|,)", " $1 ");
+    }
+
 	public static ArrayList<Token> getTokens (String input) {
         ArrayList<Token> tokens = new ArrayList<Token>();
+        input = preProcess(input);
         ArrayList<String> splitedInput = new ArrayList<String>(Arrays.asList(input.split("\\s+")));
 
         for(String command : splitedInput) {
@@ -52,29 +58,4 @@ public class Lex {
 
         return tokens;
 	}
-
-    public static String preProcess(String input) {
-        // add an extra \s to the tokenizer recognize as an new command
-        return input.replaceAll("(;|=|<>|>|<|<=|>=|\\*|\\(|\\)|'|\\\"|,)", " $1 ");
-    }
-
-	public static void main(String[] args) {
-		//String input = "9213123123 23838 12 SELECT select from FROM";
-		try {
-			
-			String  arquivo = LeitorArquivo.readFile();
-			ArrayList<Token> tokens = getTokens(preProcess(arquivo));
-			
-			for (Token token : tokens){
-				System.out.println(token);
-			}
-			
-			
-		} catch (FileNotFoundException e) {
-			System.err.println("Impossível ler o arquivo.");
-		}
-		
-	}
-	
-	
 }
