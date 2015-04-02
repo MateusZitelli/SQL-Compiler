@@ -45,10 +45,11 @@ public class Tokenizer {
 
 	public static ArrayList<Token> getTokens (String input) {
         ArrayList<Token> tokens = new ArrayList<Token>();
+        input = preProcess(input);
         ArrayList<String> splitedInput = new ArrayList<String>(Arrays.asList(input.split("\\s+")));
 
         for(String command : splitedInput) {
-            Token token = getToken(preProcess(command));
+            Token token = getToken(command);
             System.out.println(token);
             if(token != null) {
                 tokens.add(token);
