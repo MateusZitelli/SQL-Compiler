@@ -39,7 +39,7 @@ public class Tokenizer {
     }
 
     public static String preProcess(String input) {
-        // add an extra \s to the tokenizer recognize as an new command
+        // add extra " " after and before some symbols to the tokenizer recognize as an new command
         return input.replaceAll("(;|=|<>|>|<|<=|>=|\\*|\\(|\\)|'|\\\"|,)", " $1 ");
     }
 
