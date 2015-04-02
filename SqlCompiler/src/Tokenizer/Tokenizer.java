@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Lex {
+public class Tokenizer {
     // Stores if the lex is ok without erros
     public static boolean ok = true;
 
@@ -52,25 +52,4 @@ public class Lex {
 
         return tokens;
 	}
-
-	public static void main(String[] args) {
-		//String input = "9213123123 23838 12 SELECT select from FROM";
-		
-		try {
-			
-			String  arquivo = LeitorArquivo.readFile();
-			ArrayList<Token> tokens = getTokens(arquivo);
-			
-			for (Token token : tokens){
-				System.out.println(token);
-			}
-			
-			
-		} catch (FileNotFoundException e) {
-			System.err.println("Impossível ler o arquivo.");
-		}
-		
-	}
-	
-	
 }
