@@ -1,5 +1,0 @@
-./Utils/Utils.java
-./SqlCompiler.java
-./Tokenizer/TokenType.java
-./Tokenizer/Tokenizer.java
-./Tokenizer/Token.java
