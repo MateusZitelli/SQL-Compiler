@@ -38,12 +38,17 @@ public class Tokenizer {
         return null;
     }
 
+    public static String preProcess(String input) {
+        // add an extra \s to the tokenizer recognize as an new command
+        return input.replaceAll("(;|=|<>|>|<|<=|>=|\\*|\\(|\\)|'|\\\"|,)", " $1 ");
+    }
+
 	public static ArrayList<Token> getTokens (String input) {
         ArrayList<Token> tokens = new ArrayList<Token>();
         ArrayList<String> splitedInput = new ArrayList<String>(Arrays.asList(input.split("\\s+")));
 
         for(String command : splitedInput) {
-            Token token = getToken(command);
+            Token token = getToken(preProcess(command));
             System.out.println(token);
             if(token != null) {
                 tokens.add(token);
