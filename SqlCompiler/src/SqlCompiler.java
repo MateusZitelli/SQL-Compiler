@@ -12,5 +12,6 @@ public class SqlCompiler {
         }
         
         System.out.println(Tokenizer.getTokens(fileContent));
+        Syntaxer.test();
     }
 }
