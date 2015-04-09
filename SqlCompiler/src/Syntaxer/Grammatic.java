@@ -1,7 +1,3 @@
 public enum Grammatic {
-    Elemento, ElementoPrime, Coluna;
-    /*START, Create, UDatabase, ATable, DTable, CmdInsert, CmdDelete, CmdSelect, Create', CDatabase, CTable, ConteudoTabela, Elemento,
-	Coluna, Elemento', DataType, Condition, Stmt, Columns, ColumnValue, Columns', Columns'', ColumnValue', ColumnValue'',
-	CmdWhere, Whereclausule, Operator, Whereclausule', Logical, Tables, Tables';
-	*/
+    START, Create, UDatabase, ATable, DTable, CmdInsert, CmdDelete, CmdSelect, CreatePrime, CDatabase, CTable, ConteudoTabela, Elemento, Coluna, ElementoPrime, DataType, Condition, Stmt, Columns, ColumnValue, ColumnsValue, ColumnsPrime, ColumnsPrimePrime, ColumnValuePrime, ColumnValuePrimePrime, CmdWhere, Whereclausule, Operator, WhereclausulePrime, Logical, Tables, TablesPrime;
 }
