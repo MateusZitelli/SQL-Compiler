@@ -6,7 +6,7 @@ public class Syntaxer {
     public static ParsingTable table;
     public static Stack stack;
 
-    public static void analyse(ArrayList<Token> tokensList) {
+    public static void analyze(ArrayList<Token> tokensList) {
         int position = 0;
         Token token;
         Production rule;
