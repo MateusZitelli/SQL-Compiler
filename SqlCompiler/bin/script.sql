@@ -1,1 +1,2 @@
-insert into teste (nome, outroNome) values (caramba);
+insert into teste (nome, outroNome) values ("teste");
+
