@@ -25,7 +25,9 @@ public class Syntaxer {
                     }
                 }else{
                     System.out.print("Bad input: ");
-                    System.out.println(token);
+                    System.out.print(token);
+                    System.out.print(" expected: ");
+                    System.out.println(expectedInput);
                     return;
                 }
             }else if(expectedInput instanceof Grammatic){
