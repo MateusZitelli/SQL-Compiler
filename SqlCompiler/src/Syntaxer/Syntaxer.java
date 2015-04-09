@@ -4,7 +4,7 @@ import Tokenizer.*;
 
 public class Syntaxer { 
     public static ParsingTable table;
-    public static Stack stack;
+    public static Stack<Object> stack = new Stack<Object>();
 
     public static void analyze(ArrayList<Token> tokensList) {
         int position = 0;
