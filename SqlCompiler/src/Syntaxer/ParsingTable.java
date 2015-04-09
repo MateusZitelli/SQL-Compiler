@@ -10,9 +10,9 @@ public class ParsingTable {
         table.put(new Key(tokenType, grammatic), production);
     }
 
-    public static void getRule(TokenType tokenType, Grammatic grammatic) {
+    public static Production getRule(TokenType tokenType, Grammatic grammatic) {
         // Get rule at (tokenType, grammatic)
-        table.get(new Key(tokenType, grammatic));
+        return table.get(new Key(tokenType, grammatic));
     }
 
     public ParsingTable () {
