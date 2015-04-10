@@ -12,6 +12,8 @@ public class Syntaxer {
         Production rule;
         Object expectedInput;
 
+        System.out.println("(ง︡'-'︠)ง Sintax analsys:");
+        
         while(stack.size() > 0) {
             token = tokensList.get(position); 
             expectedInput = stack.pop(); 

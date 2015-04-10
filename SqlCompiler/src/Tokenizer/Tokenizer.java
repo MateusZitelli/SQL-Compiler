@@ -47,7 +47,7 @@ public class Tokenizer {
         ArrayList<Token> tokens = new ArrayList<Token>();
         input = preProcess(input);
         ArrayList<String> splitedInput = new ArrayList<String>(Arrays.asList(input.split("\\s+")));
-
+        System.out.println("( ͡° ͜ʖ ͡°) Tokens:");
         for(String command : splitedInput) {
             Token token = getToken(command);
             System.out.println(token);
@@ -55,6 +55,8 @@ public class Tokenizer {
                 tokens.add(token);
             }
         }
+
+        tokens.add(new Token(TokenType.EOF, ""));
 
         return tokens;
 	}

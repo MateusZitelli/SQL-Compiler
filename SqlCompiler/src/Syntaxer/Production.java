@@ -2,11 +2,6 @@ import java.util.Arrays;
 import Tokenizer.*;
 
 public enum Production {
-    Elemento(Grammatic.Coluna, Grammatic.ElementoPrime),
-    // Representa ElementoPrime -> vazio
-    ElementoPrime0(/*vazio*/),
-    // Representa ElementoPrime -> virgula Elemento
-    ElementoPrime1(TokenType.COMMA, Grammatic.Elemento),
     StartCreate(Grammatic.Create),
     StartUse(Grammatic.UDatabase),
     StartAlter(Grammatic.ATable),
@@ -20,7 +15,7 @@ public enum Production {
     ATableAlter(TokenType.ALTER, TokenType.TABLE, TokenType.id, Grammatic.Stmt),
     DTableDrop(TokenType.DROP, TokenType.TABLE, TokenType.id, TokenType.END_STATEMENT),
     DTableTruncate(TokenType.TRUNCATE, TokenType.TABLE, TokenType.id, TokenType.END_STATEMENT),
-    CmdInsertInsert(TokenType.INSERT, TokenType.INTO, TokenType.id, TokenType.OPEN_PARENTHESIS, Grammatic.Columns, TokenType.CLOSE_PARENTHESIS, TokenType.VALUES, TokenType.OPEN_PARENTHESIS, Grammatic.ColumnsValue, TokenType.CLOSE_PARENTHESIS),
+    CmdInsertInsert(TokenType.INSERT, TokenType.INTO, TokenType.id, TokenType.OPEN_PARENTHESIS, Grammatic.Columns, TokenType.CLOSE_PARENTHESIS, TokenType.VALUES, TokenType.OPEN_PARENTHESIS, Grammatic.ColumnValue, TokenType.CLOSE_PARENTHESIS, TokenType.END_STATEMENT),
     CmdDeleteDelete(TokenType.DELETE, TokenType.FROM, TokenType.id, Grammatic.CmdWhere, TokenType.END_STATEMENT),
     CmdSelectSelect(TokenType.SELECT, Grammatic.Columns, TokenType.FROM, Grammatic.Tables, Grammatic.CmdWhere, TokenType.END_STATEMENT),
     CreatePrimeDatabase(Grammatic.CDatabase),

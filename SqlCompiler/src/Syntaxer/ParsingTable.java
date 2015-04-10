@@ -16,7 +16,6 @@ public class ParsingTable {
     }
 
     public ParsingTable () {
-        // Add at column with token COMMA and line with rule ElementoPrime the production ElementoPrime1 
         setRule(TokenType.CREATE, Grammatic.START, Production.StartCreate);
         setRule(TokenType.USE, Grammatic.START, Production.StartUse);
         setRule(TokenType.ALTER, Grammatic.START, Production.StartAlter);
@@ -80,6 +79,5 @@ public class ParsingTable {
         setRule(TokenType.END_STATEMENT, Grammatic.TablesPrime, Production.TablesPrimeEND_STATEMENT);
         setRule(TokenType.COMMA, Grammatic.TablesPrime, Production.TablesPrimeComma);
         setRule(TokenType.WHERE, Grammatic.TablesPrime, Production.TablesPrimeWhere);
-        setRule(TokenType.COMMA, Grammatic.ElementoPrime, Production.ElementoPrime1); 
     }
 }
