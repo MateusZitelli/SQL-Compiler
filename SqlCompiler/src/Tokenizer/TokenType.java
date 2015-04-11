@@ -3,6 +3,8 @@
  *Autores: Joao Flavio e Mateus Zitelli
  * 
  */
+import java.util.regex.Pattern;
+
 public enum TokenType {
     // The order of the tokens implies in precedence
     CREATE("^(?i)(create)$"), 
@@ -46,9 +48,9 @@ public enum TokenType {
     number("^(-?[0-9]+(?:\\.[0-9]+)?)$"),
     id("^([a-zA-Z0-9]+)$");
         
-    public String pattern;
+    public Pattern pattern;
     
     private TokenType (String pattern) {
-        this.pattern = pattern;
+        this.pattern = Pattern.compile(pattern);
     }
 }

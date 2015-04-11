@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Tokenizer {
     // Stores if the lex is ok without erros
@@ -18,12 +17,10 @@ public class Tokenizer {
         TokenType matchedType = null;
         String matchedData = null;
 
-        Pattern r;
         Matcher m;
 
         for (TokenType type: TokenType.values()) {
-            r = Pattern.compile(type.pattern);
-            m = r.matcher(command);
+            m = type.pattern.matcher(command);
 
             if (m.find()) {
                 // If some type matches then return a token with it
