@@ -6,6 +6,7 @@
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class Tokenizer {
@@ -17,10 +18,10 @@ public class Tokenizer {
         TokenType matchedType = null;
         String matchedData = null;
 
-        Matcher m;
+        Matcher m = Pattern.compile("init").matcher("init");
 
         for (TokenType type: TokenType.values()) {
-            m = type.pattern.matcher(command);
+            m = m.reset(command).usePattern(type.pattern);
 
             if (m.find()) {
                 // If some type matches then return a token with it
