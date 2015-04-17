@@ -371,12 +371,11 @@ public class Automato {
                 case 20:
 
                 default:
-                    return new Token(TokenType.ERROR,String.valueOf(palavra));
-                    //break;
+                    break;
             }//end switch
         }//end for
 
-        return null;
+        return new Token(TokenType.id ,String.valueOf(palavra));
 
     }
 
