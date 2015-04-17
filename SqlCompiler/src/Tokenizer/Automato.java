@@ -4,13 +4,15 @@ public class Automato {
             int i = Integer.parseInt(stringToken);
             // TODO send INT value
             Token token = Token(TokenType.integer, stringToken);
-        }catch(NumberFormatException e){}
-
-        try{
-            double d = Double.parseDouble(stringToken);
-            Token token = Token(TokenType.number, stringToken);
-        }catch(NumberFormatException nfe){
-            return null;
+            return token;
+        }catch(NumberFormatException e){
+            try{
+                double d = Double.parseDouble(stringToken);
+                Token token = Token(TokenType.number, stringToken);
+                return token;
+            }catch(NumberFormatException nfe){
+                return null;
+            }
         }
     }
 
