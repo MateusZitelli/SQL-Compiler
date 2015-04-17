@@ -47,8 +47,11 @@ public class Tokenizer {
         ArrayList<String> splitedInput = new ArrayList<String>(Arrays.asList(input.split("\\s+")));
         System.out.println("( ͡° ͜ʖ ͡°) Tokens:");
         for(String command : splitedInput) {
-        	//Token token = getToken(command);
-        	Token token = Automato.identifyToken(command);
+            Token token = null;
+        	Token token = Automato.identifyNumber(command);
+            if(!token){
+        	    token = Automato.identifyToken(command);
+            }
             System.out.println(token);
             if(token != null) {
                 tokens.add(token);

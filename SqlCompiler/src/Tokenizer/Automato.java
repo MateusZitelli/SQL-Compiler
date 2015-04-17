@@ -1,25 +1,29 @@
-
-
 public class Automato {
+    public static Token identifyNumber(String stringToken) {
+        try{
+            int i = Integer.parseInt(stringToken);
+            // TODO send INT value
+            Token token = Token(TokenType.integer, stringToken);
+        }catch(NumberFormatException e){}
 
-	public static Token identifyToken(String stringToken) {
-		// stringToken = "<>";
-		//ArrayList<String> palavra = new ArrayList<>(stringToken.length());
-		//String[] palavra = stringToken.split("");
-		int state = 0;
-		char[] palavra = stringToken.toLowerCase().toCharArray();
-		
+        try{
+            double d = Double.parseDouble(stringToken);
+            Token token = Token(TokenType.number, stringToken);
+        }catch(NumberFormatException nfe){
+            return null;
+        }
+    }
 
-		//System.out.println("Palavra--:  " + String.valueOf(palavra));
-		// " "+palavra.length );
-		// automato
+    public static Token identifyToken(String stringToken) {
+        int state = 0;
+        char[] palavra = stringToken.toLowerCase().toCharArray();
 
-		for(char letra : palavra){ 
+        for(char letra : palavra){ 
             switch (state) {
                 case 0:
                     switch (letra) {
                         case '(':
-                        	if(String.valueOf(palavra).equalsIgnoreCase("(")){
+                            if(String.valueOf(palavra).equalsIgnoreCase("(")){
                                 return new Token(TokenType.OPEN_PARENTHESIS , String.valueOf(palavra)); // retornar token para )
                             }
                             break;
@@ -61,7 +65,7 @@ public class Automato {
                             state = 9;
                             break;
                         case 'a':
-                        	state = 1;
+                            state = 1;
                             break;
                         case 'c':
                             state = 10;
@@ -119,7 +123,7 @@ public class Automato {
                             state = 11;
                             break;
                         default:
-                        	//redireciona para o estado para verificar se é um ID
+                            //redireciona para o estado para verificar se Ã© um ID
                             state = 20;
                             break;
                     }
@@ -127,12 +131,12 @@ public class Automato {
                 case 1:
                     switch (letra) {
                         case 'u':
-                        	if(String.valueOf(palavra).equalsIgnoreCase("auto_increment")){
+                            if(String.valueOf(palavra).equalsIgnoreCase("auto_increment")){
                                 return new Token(TokenType.AUTO_INCREMENT , String.valueOf(palavra)); // retornar token para auto_increment
                             }
                             break;
                         case 'd':
-                        	if(String.valueOf(palavra).equalsIgnoreCase("add")){
+                            if(String.valueOf(palavra).equalsIgnoreCase("add")){
                                 return new Token(TokenType.ADD , String.valueOf(palavra)); // retornar token para add
                             }
                             break;
@@ -250,7 +254,7 @@ public class Automato {
                             }
                             break;
                         default:
-                        	return new Token(TokenType.ERROR, String.valueOf(palavra)); // retornar token para <>
+                            return new Token(TokenType.ERROR, String.valueOf(palavra)); // retornar token para <>
                             //break;
                     }
                     break;
@@ -260,7 +264,7 @@ public class Automato {
                             if(String.valueOf(palavra).equalsIgnoreCase(">=")){
                                 return new Token(TokenType.OPERATOR, String.valueOf(palavra)); // retornar token para >=
                             }else
-                            	return new Token(TokenType.ERROR, String.valueOf(palavra)); // retornar token para >=
+                                return new Token(TokenType.ERROR, String.valueOf(palavra)); // retornar token para >=
                             //break;
                         default:
                             // Definir um erro
@@ -363,15 +367,15 @@ public class Automato {
                     }
                     break;
                 case 20:
-                	
+
                 default:
-                	return new Token(TokenType.ERROR,String.valueOf(palavra));
+                    return new Token(TokenType.ERROR,String.valueOf(palavra));
                     //break;
             }//end switch
-		}//end for
+        }//end for
 
-	return null;
-       
-	}
+        return null;
+
+    }
 
 }
