@@ -1,3 +1,5 @@
+package Syntaxer;
+
 import java.util.*;
 import Tokenizer.*;
 import Utils.*;

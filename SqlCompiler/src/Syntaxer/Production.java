@@ -1,3 +1,5 @@
+package Syntaxer;
+
 import java.util.Arrays;
 import Tokenizer.*;
 

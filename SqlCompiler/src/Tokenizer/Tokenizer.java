@@ -3,6 +3,7 @@
  *Autores: Jooao Flavio e Mateus Zitelli
  * 
  */
+package Tokenizer;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -48,8 +49,8 @@ public class Tokenizer {
         System.out.println("( ͡° ͜ʖ ͡°) Tokens:");
         for(String command : splitedInput) {
             Token token = null;
-        	Token token = Automato.identifyNumber(command);
-            if(!token){
+        	token = Automato.identifyNumber(command);
+            if(token == null){
         	    token = Automato.identifyToken(command);
             }
             System.out.println(token);

@@ -1,10 +1,14 @@
 import java.util.ArrayList;
 import java.io.FileNotFoundException;
 
+import Syntaxer.Syntaxer;
+import Tokenizer.Token;
+import Tokenizer.Tokenizer;
+import Utils.Utils;
+
 public class SqlCompiler {
     public static void main (String[] args) {
         String fileContent = null;
-        Syntaxer syntaxer = new Syntaxer();
         
         try {
             fileContent = Utils.readFile();

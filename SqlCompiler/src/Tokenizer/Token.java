@@ -1,3 +1,5 @@
+package Tokenizer;
+
 /*Nome: Token.java
  *Descricao: Classe responsavel por guardar a estrutura do TOKEN. 
  *Autores: Joao Flavio

@@ -1,3 +1,5 @@
+package Tokenizer;
+
 /*Nome: TokenType.java
  *Descricao: ENUM que definem as expressoes regulares que serao reconhecidas. 
  *Autores: Joao Flavio e Mateus Zitelli

@@ -1,3 +1,5 @@
+package Tokenizer;
+
 
 public class Automato {
     
@@ -414,11 +416,6 @@ public class Automato {
                             break;
                     }
                     break;
-                case 20: //Estado que analisa se o token é um ID, para alguma letra que nao foi encontrada no switch case
-                	if (Character.isLetter(letra)){
-                        return new Token(TokenType.id ,String.valueOf(palavra));
-                    } else
-                        return new Token(TokenType.ERROR ,String.valueOf(palavra));
                 case 21: //Estado que retorna token de erro generico
                 	System.out.print("ponto_2_erro "+ String.valueOf(letra));
                 	return new Token(TokenType.ERROR ,String.valueOf(palavra));
@@ -426,10 +423,7 @@ public class Automato {
             }//end switch state
         }//end for word
 
-              
-        return new Token(TokenType.id ,String.valueOf(palavra)); //no caso de IDs com 1 letra
-        //return null;
-        
+        return null; // No reserved word found
     }
 
 }
