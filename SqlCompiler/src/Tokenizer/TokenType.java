@@ -37,6 +37,7 @@ public enum TokenType {
     CLOSE_PARENTHESIS("^(\\))$"), 
     QUOTE("^(\\'|\\\")$"), 
     OPERATOR("^(=|<>|>|<|<=|>=)$"),
+    IN(""),
     LOGICAL("^(AND|OR)$"),
     STAR("^(\\*)$"),
     COMMA("^(\\,)$"),
@@ -48,7 +49,8 @@ public enum TokenType {
     VARCHAR("^(?i)(varchar)$"),
     integer("^(-?[0-9]+)$"),
     number("^(-?[0-9]+(?:\\.[0-9]+)?)$"),
-    id("^([a-zA-Z0-9]+)$");
+    id("^([a-zA-Z0-9]+)$"),
+    ERROR("");
         
     public Pattern pattern;
     

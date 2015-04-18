@@ -38,20 +38,20 @@ public class Tokenizer {
 
     public static String preProcess(String input) {
         // add extra " " after and before some symbols to the tokenizer recognize as an new command
-    	input.replaceAll("(\\;|=|<>|>|<|<=|>=|\\*|\\(|\\)|'|\\\"|,)", " $1 ");
-        return input;
+    	return input.replaceAll("(\\;|=|<>|>|<|<=|>=|\\*|\\(|\\)|'|\\\"|,)", " $1 ");
     }
 
 	public static ArrayList<Token> getTokens (String input) {
         ArrayList<Token> tokens = new ArrayList<Token>();
         input = preProcess(input);
         ArrayList<String> splitedInput = new ArrayList<String>(Arrays.asList(input.split("\\s+")));
+        System.out.println(splitedInput);
         System.out.println("( ͡° ͜ʖ ͡°) Tokens:");
         for(String command : splitedInput) {
             Token token = null;
-        	token = Automato.identifyNumber(command);
+        	token = Identifier.identifyNumber(command);
             if(token == null){
-        	    token = Automato.identifyToken(command);
+        	    token = Identifier.identifyToken(command);
             }
             System.out.println(token);
             if(token != null) {
