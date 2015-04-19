@@ -9,9 +9,9 @@ package Tokenizer;
 public class Token {
 	
 	 public TokenType type;
-     public String data;
+     public Object data;
      
-     public Token(TokenType type, String data) {
+     public Token(TokenType type, Object data) {
          this.type = type;
          this.data = data;
      }
