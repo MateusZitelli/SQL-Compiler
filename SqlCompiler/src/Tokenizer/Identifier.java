@@ -19,6 +19,7 @@ public class Identifier {
     private static double actualFloat = 0;
     private static double floatDivider = 10;
     private static ArrayList<Character> id = new ArrayList<Character>();
+    private static ArrayList<Character> buffer = new ArrayList<Character>();
 
     // Ahead State
     private static boolean aheadReservedFound = true;
@@ -37,7 +38,6 @@ public class Identifier {
 
     // Identifier general state
     private static Iterator statesIterator;
-    private static ArrayList<Character> buffer = new ArrayList<Character>();
     private static ArrayList<Token> tokens = new ArrayList<Token>();
     private static boolean firstRun = true;
 
@@ -57,19 +57,15 @@ public class Identifier {
 
         if(!aheadFloatFound && floatFound && justOne){
             tokens.add(new Token(TokenType.number, actualFloat));
-            System.out.println(tokens.get(tokens.size() - 1));
             return true;
         }else if(!aheadIntFound && intFound && justOne){
             tokens.add(new Token(TokenType.integer, actualInt));
-            System.out.println(tokens.get(tokens.size() - 1));
             return true;
-        }else if(!aheadReservedAccept && reservedAccept && justOne){
+        }else if(reservedAccept){
             tokens.add(actualReserved);
-            System.out.println(tokens.get(tokens.size() - 1));
             return true;
         }else if(!aheadIdFound && idFound && justOne) {
             tokens.add(new Token(TokenType.id, getStringRepresentation(buffer)));
-            System.out.println(tokens.get(tokens.size() - 1));
             return true;
         }
 
@@ -89,23 +85,22 @@ public class Identifier {
         actualInt = 0;
         actualFloat = 0;
         floatDivider = 10;
-        id = new ArrayList<Character>();
 
         // Ahead State
-        aheadReservedFound = true;
+        aheadReservedFound = false;
         aheadNotReserved = false;
-        aheadIntFound = true;
+        aheadIntFound = false;
         aheadFloatFound = false;
-        aheadIdFound = true;
+        aheadIdFound = false;
 
         aheadState = 0;
         aheadReserved = null;
         aheadInt = 0;
         aheadFloat = 0;
         aheadFloatDivider = 10;
-        aheadId = new ArrayList<Character>();
-        aheadBuffer = new ArrayList<Character>();
         firstRun = true;
+        buffer = new ArrayList<Character>();
+        aheadBuffer = new ArrayList<Character>();
     }
 
     private static void tickAtualState(){
@@ -120,33 +115,39 @@ public class Identifier {
         actualInt = aheadInt;
         actualFloat = aheadFloat;
         floatDivider = aheadFloatDivider;
-        id = new ArrayList<Character>(aheadId);
+        buffer = new ArrayList<Character>(aheadBuffer);
+    }
+
+    public static void tickWithChar(char letra) {
+        boolean tokenAdded = false;
+        if(floatFound || intFound || firstRun){
+            updateNumber(letra);
+        }
+        if(idFound || firstRun) {
+            updateId(letra);
+        }
+        if(!notReserved || firstRun){
+            updateReservedWord(letra);
+        }
+        tokenAdded = addTokenIfWereAvailable();
+        if(tokenAdded){
+            resetState();
+            if (!(letra == ' ' || letra == '\t' || letra == '\r' || letra == '\n')) {
+                tickWithChar(letra);
+            }
+        }else{
+            aheadBuffer.add(letra);
+            tickAtualState();
+            firstRun = false;
+        }
     }
     
 
     public static ArrayList<Token> identifyTokens(String input){
         char[] palavra = input.toLowerCase().toCharArray();
-        ArrayList<Character> command = new ArrayList<Character>();
-        boolean tokenAdded = false;
         
         for(char letra : palavra){
-            buffer.add(letra);
-            if(floatFound || intFound || firstRun){
-                updateNumber(letra);
-            }
-            if(idFound || firstRun) {
-                updateId(letra);
-            }
-            if(!notReserved || firstRun){
-                updateReservedWord(letra);
-            }
-            tokenAdded = addTokenIfWereAvailable();
-            if(tokenAdded){
-                resetState();
-            }else{
-                tickAtualState();
-                firstRun = false;
-            }
+            tickWithChar(letra);
         }
         return tokens;
     }
@@ -159,11 +160,16 @@ public class Identifier {
             aheadFloat = actualInt;
         }
         if(Character.isDigit(letra)){
+            if(!floatFound)
+                intFound = true;
+
             if(intFound || firstRun){
                 aheadInt = actualInt * 10 + Character.getNumericValue(letra); 
+                aheadIntFound = true;
             }else if(floatFound || firstRun){
                 aheadFloatDivider *= 10;
                 aheadFloat += Character.getNumericValue(letra) / floatDivider; 
+                aheadFloatFound = true;
             }
         }else if(letra != '.'){
             aheadFloatFound = false;
@@ -172,9 +178,7 @@ public class Identifier {
     }
 
     public static void updateId(Character letra){
-        if(id.size() == 0 && (!Character.isLetter(letra))){
-            aheadIdFound = false;
-        }
+        aheadIdFound = Character.isLetter(letra);
     }
 
     private static void createReservedStatesQueue(String remReservedWord) {
@@ -186,6 +190,11 @@ public class Identifier {
         switch (state) {
             case 0:
                 switch (letra) {
+                    case '"':
+                        // Add remanining string from token OPEN_PARENTHESIS
+                        aheadReserved = new Token(TokenType.QUOTE , null);
+                        aheadReservedFound = true;
+                        break;
                     case ')':
                         // Add remanining string from token OPEN_PARENTHESIS
                         aheadReserved = new Token(TokenType.CLOSE_PARENTHESIS , null);
