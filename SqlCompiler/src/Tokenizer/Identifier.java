@@ -22,11 +22,11 @@ public class Identifier {
     private static ArrayList<Character> buffer = new ArrayList<Character>();
 
     // Ahead State
-    private static boolean aheadReservedFound = true;
+    private static boolean aheadReservedFound = false;
     private static boolean aheadNotReserved = false;
-    private static boolean aheadIntFound = true;
+    private static boolean aheadIntFound = false;
     private static boolean aheadFloatFound = false;
-    private static boolean aheadIdFound = true;
+    private static boolean aheadIdFound = false;
 
     private static int aheadState = 0;
     private static Token aheadReserved = null;
@@ -120,6 +120,7 @@ public class Identifier {
 
     public static void tickWithChar(char letra) {
         boolean tokenAdded = false;
+        aheadBuffer.add(letra);
         if(floatFound || intFound || firstRun){
             updateNumber(letra);
         }
@@ -136,7 +137,6 @@ public class Identifier {
                 tickWithChar(letra);
             }
         }else{
-            aheadBuffer.add(letra);
             tickAtualState();
             firstRun = false;
         }
@@ -622,6 +622,6 @@ public class Identifier {
                 aheadReservedFound = false;
                 aheadNotReserved = true;
         }
-    }//end for word
+    }
 }
 
