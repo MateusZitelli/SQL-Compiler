@@ -18,14 +18,31 @@ public class ParsingTable {
     }
 
     public ParsingTable () {
-        setRule(TokenType.CREATE, Grammatic.START, Production.StartCreate);
-        setRule(TokenType.USE, Grammatic.START, Production.StartUse);
-        setRule(TokenType.ALTER, Grammatic.START, Production.StartAlter);
-        setRule(TokenType.DROP, Grammatic.START, Production.StartDrop);
-        setRule(TokenType.TRUNCATE, Grammatic.START, Production.StartTruncate);
-        setRule(TokenType.INSERT, Grammatic.START, Production.StartInsert);
-        setRule(TokenType.DELETE, Grammatic.START, Production.StartDelete);
-        setRule(TokenType.SELECT, Grammatic.START, Production.StartSelect);
+        setRule(TokenType.CREATE, Grammatic.START, Production.StartCommandPrime);
+        setRule(TokenType.USE, Grammatic.START, Production.StartCommandPrime);
+        setRule(TokenType.ALTER, Grammatic.START, Production.StartCommandPrime);
+        setRule(TokenType.DROP, Grammatic.START, Production.StartCommandPrime);
+        setRule(TokenType.TRUNCATE, Grammatic.START, Production.StartCommandPrime);
+        setRule(TokenType.INSERT, Grammatic.START, Production.StartCommandPrime);
+        setRule(TokenType.DELETE, Grammatic.START, Production.StartCommandPrime);
+        setRule(TokenType.SELECT, Grammatic.START, Production.StartCommandPrime);
+        setRule(TokenType.EOF, Grammatic.CommandPrime, Production.CommandPrimeEps);
+        setRule(TokenType.CREATE, Grammatic.CommandPrime, Production.CommandPrimeCommand);
+        setRule(TokenType.USE, Grammatic.CommandPrime, Production.CommandPrimeCommand);
+        setRule(TokenType.ALTER, Grammatic.CommandPrime, Production.CommandPrimeCommand);
+        setRule(TokenType.DROP, Grammatic.CommandPrime, Production.CommandPrimeCommand);
+        setRule(TokenType.TRUNCATE, Grammatic.CommandPrime, Production.CommandPrimeCommand);
+        setRule(TokenType.INSERT, Grammatic.CommandPrime, Production.CommandPrimeCommand);
+        setRule(TokenType.DELETE, Grammatic.CommandPrime, Production.CommandPrimeCommand);
+        setRule(TokenType.SELECT, Grammatic.CommandPrime, Production.CommandPrimeCommand);
+        setRule(TokenType.CREATE, Grammatic.Command, Production.CommandCreate);
+        setRule(TokenType.USE, Grammatic.Command, Production.CommandUse);
+        setRule(TokenType.ALTER, Grammatic.Command, Production.CommandAlter);
+        setRule(TokenType.DROP, Grammatic.Command, Production.CommandDrop);
+        setRule(TokenType.TRUNCATE, Grammatic.Command, Production.CommandTruncate);
+        setRule(TokenType.INSERT, Grammatic.Command, Production.CommandInsert);
+        setRule(TokenType.DELETE, Grammatic.Command, Production.CommandDelete);
+        setRule(TokenType.SELECT, Grammatic.Command, Production.CommandSelect);
         setRule(TokenType.CREATE, Grammatic.Create, Production.CreateCreate);
         setRule(TokenType.USE, Grammatic.UDatabase, Production.UDatabaseUse);
         setRule(TokenType.ALTER, Grammatic.ATable, Production.ATableAlter);
