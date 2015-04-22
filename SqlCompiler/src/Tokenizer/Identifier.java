@@ -61,7 +61,7 @@ public class Identifier {
         }else if(!aheadIntFound && intFound && justOne){
             tokens.add(new Token(TokenType.integer, actualInt));
             return true;
-        }else if(reservedAccept){
+        }else if(reservedAccept && !aheadIdFound){
             tokens.add(actualReserved);
             return true;
         }else if(!aheadIdFound && idFound && justOne) {
@@ -178,7 +178,12 @@ public class Identifier {
     }
 
     public static void updateId(Character letra){
-        aheadIdFound = Character.isLetter(letra);
+        // First char of an id must be a letter
+        if(buffer.size() == 0){
+            aheadIdFound = Character.isLetter(letra);
+        }else{
+            aheadIdFound = Character.isLetter(letra) || Character.isDigit(letra) || letra == '_';
+        }
     }
 
     private static void createReservedStatesQueue(String remReservedWord) {
@@ -191,6 +196,11 @@ public class Identifier {
             case 0:
                 switch (letra) {
                     case '"':
+                        // Add remanining string from token OPEN_PARENTHESIS
+                        aheadReserved = new Token(TokenType.QUOTE , null);
+                        aheadReservedFound = true;
+                        break;
+                    case '`':
                         // Add remanining string from token OPEN_PARENTHESIS
                         aheadReserved = new Token(TokenType.QUOTE , null);
                         aheadReservedFound = true;
