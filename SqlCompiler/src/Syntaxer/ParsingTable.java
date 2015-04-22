@@ -52,9 +52,10 @@ public class ParsingTable {
         setRule(TokenType.DELETE, Grammatic.CmdDelete, Production.CmdDeleteDelete);
         setRule(TokenType.SELECT, Grammatic.CmdSelect, Production.CmdSelectSelect);
         setRule(TokenType.DATABASE, Grammatic.CreatePrime, Production.CreatePrimeDatabase);
+        setRule(TokenType.TABLE, Grammatic.CreatePrime, Production.CreatePrimeTable);
         setRule(TokenType.id, Grammatic.CreatePrime, Production.CreatePrimeId);
         setRule(TokenType.DATABASE, Grammatic.CDatabase, Production.CDatabaseDatabase);
-        setRule(TokenType.id, Grammatic.CTable, Production.CTableId);
+        setRule(TokenType.TABLE, Grammatic.CTable, Production.CTableTable);
         setRule(TokenType.OPEN_PARENTHESIS, Grammatic.ConteudoTabela, Production.ConteudoTabelaOPEN_PARENTHESIS);
         setRule(TokenType.id, Grammatic.Elemento, Production.ElementoId);
         setRule(TokenType.id, Grammatic.Coluna, Production.ColunaId);
