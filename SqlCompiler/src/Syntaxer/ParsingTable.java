@@ -79,6 +79,7 @@ public class ParsingTable {
         setRule(TokenType.id, Grammatic.Columns, Production.ColumnsId);
         setRule(TokenType.STAR, Grammatic.Columns, Production.ColumnsSTAR);
         setRule(TokenType.QUOTE, Grammatic.ColumnValue, Production.ColumnValueQUOTE);
+        setRule(TokenType.integer, Grammatic.ColumnValue, Production.ColumnValueInteger);
         setRule(TokenType.number, Grammatic.ColumnValue, Production.ColumnValueNumber);
         setRule(TokenType.id, Grammatic.ColumnsPrime, Production.ColumnsPrimeId);
         setRule(TokenType.CLOSE_PARENTHESIS, Grammatic.ColumnsPrimePrime, Production.ColumnsPrimePrimeCLOSE_PARENTHESIS);
