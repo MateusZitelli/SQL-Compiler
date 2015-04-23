@@ -10,9 +10,9 @@ import GrammaticalElement.*;
 public class Token {
 	
 	 public GrammaticalInterface type;
-     public Object data;
+     public String data;
      
-     public Token(GrammaticalInterface type, Object data) {
+     public Token(GrammaticalInterface type, String data) {
          this.type = type;
          this.data = data;
      }

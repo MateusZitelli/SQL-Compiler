@@ -1,10 +1,12 @@
 package Syntaxer;
 
 import java.util.*;
-import GrammaticalElement.GrammaticalInterface;
+import GrammaticalElement.*;
 
 public enum Grammatic implements GrammaticalInterface {
     START, Command, CommandPrime, Create, UDatabase, ATable, DTable, CmdInsert, CmdDelete, CmdSelect, CreatePrime, CDatabase, CTable, ConteudoTabela, Elemento, Coluna, ElementoPrime, DataType, Condition, Stmt, Columns, ColumnValue, ColumnsValue, ColumnsPrime, ColumnsPrimePrime, ColumnValuePrime, ColumnValuePrimePrime, CmdWhere, Whereclausule, Operator, WhereclausulePrime, Logical, Tables, TablesPrime;
+
+    public ActionInterface action;
 
     public boolean isTokenType() {
         return false;
@@ -22,6 +24,10 @@ public enum Grammatic implements GrammaticalInterface {
         return false;
     }
 
+    public void act(Stack<GrammaticalInterface> stack) {
+        action.act(stack, attrs);
+    }
+
     private Map<String, String> attrs;
 
     public String getAttr(String key) {
@@ -30,6 +36,13 @@ public enum Grammatic implements GrammaticalInterface {
 
     public void setAttr(String key, String value) {
         attrs.put(key, value);
+    }
+
+    private Grammatic(ActionInterface action, String... attrs) {
+        this.attrs = new HashMap<String, String>();
+        for(String attr: attrs){
+            setAttr(attr, null);
+        }
     }
 
     private Grammatic(String... attrs) {

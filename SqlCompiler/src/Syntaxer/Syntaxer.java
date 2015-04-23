@@ -24,6 +24,10 @@ public class Syntaxer {
                     position += 1; 
                     System.out.print("pop ");
                     System.out.println(token);
+                    // If there is data put in the next element in the stack
+                    if(token.data != null){
+                        stack.get(stack.size() - 1).setAttr("data", token.data);
+                    }
                     if(grammaticalElement == TokenType.EOF){
                         System.out.println("Accepted");
                     }

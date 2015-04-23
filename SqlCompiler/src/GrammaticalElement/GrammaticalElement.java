@@ -38,7 +38,7 @@ public class GrammaticalElement implements GrammaticalInterface {
     }
 
     public void act(Stack<GrammaticalInterface> stack) {
-        action.act(stack);
+        action.act(stack, attrs);
     }
 
     public String name() {

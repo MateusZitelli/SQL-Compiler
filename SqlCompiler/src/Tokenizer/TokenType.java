@@ -7,7 +7,7 @@ package Tokenizer;
  */
 import java.util.*;
 
-import GrammaticalElement.GrammaticalInterface;
+import GrammaticalElement.*;
 
 public enum TokenType implements GrammaticalInterface {
     // The order of the tokens implies in precedence
@@ -54,6 +54,8 @@ public enum TokenType implements GrammaticalInterface {
     id(),
     ERROR();
 
+    public ActionInterface action;
+
     private Map<String, String> attrs;
 
     public boolean isTokenType() {
@@ -78,6 +80,11 @@ public enum TokenType implements GrammaticalInterface {
 
     public void setAttr(String key, String value) {
         attrs.put(key, value);
+    }
+
+    public void act(Stack<GrammaticalInterface> stack) {
+        // Sould not be used
+        action.act(stack, attrs);
     }
 
     private TokenType(String... attrs) {

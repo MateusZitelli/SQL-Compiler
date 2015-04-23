@@ -56,10 +56,10 @@ public class Identifier {
         justOne &= !aheadFloatFound && !aheadIntFound && !aheadReservedAccept && !aheadIdFound;
 
         if(!aheadFloatFound && floatFound && justOne){
-            tokens.add(new Token(TokenType.number, actualFloat));
+            tokens.add(new Token(TokenType.number, Double.toString(actualFloat)));
             return true;
         }else if(!aheadIntFound && intFound && justOne){
-            tokens.add(new Token(TokenType.integer, actualInt));
+            tokens.add(new Token(TokenType.integer, Integer.toString(actualInt)));
             return true;
         }else if(reservedAccept && !aheadIdFound){
             tokens.add(actualReserved);

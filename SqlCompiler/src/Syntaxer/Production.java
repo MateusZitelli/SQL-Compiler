@@ -5,15 +5,38 @@ import java.util.*;
 import Tokenizer.*;
 import GrammaticalElement.*;
 import Action.*;
+import Synthesized.*;
 
-class WhileAct implements ActionInterface {
-    public void act(Stack<GrammaticalInterface> stack) {
-        stack.get(stack.size() - 1).setAttr("teste", "false");
-    } 
+class FinalizeAct implements ActionInterface {
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+        System.out.println("############## Synthesized #################");
+        System.out.println("Printa o atributo data recebido do token anterior");
+        System.out.println(attrs.get("data"));
+        System.out.println("Passa ele para o elemento a cima na stack");
+        stack.get(stack.size() - 1).setAttr("id", attrs.get("data"));
+        System.out.println("############################################");
+    }
+}
+
+class PassUpAct implements ActionInterface {
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+        System.out.println("############## Action #################");
+        System.out.println("Passou informações para o prox. elemento da stack");
+        stack.get(stack.size() - 1).setAttr("code", "mkdir");
+        System.out.println("############################################");
+    }
+}
+
+class SynthesizedElements {
+    public static Synthesized Print = new Synthesized(new FinalizeAct()); 
+}
+
+class ActionElements {
+    public static Action passUp = new Action(new PassUpAct()); 
 }
 
 public enum Production {
-    StartCommandPrime(Grammatic.CommandPrime, new Action(new WhileAct())),
+    StartCommandPrime(Grammatic.CommandPrime, SynthesizedElements.Print),
     CommandPrimeEps(),
     CommandPrimeCommand(Grammatic.Command, Grammatic.CommandPrime),
     CommandCreate(Grammatic.Create),
@@ -36,7 +59,8 @@ public enum Production {
     CreatePrimeTable(Grammatic.CTable),
     CreatePrimeId(Grammatic.CTable),
     CDatabaseDatabase(TokenType.DATABASE, TokenType.id, TokenType.END_STATEMENT),
-    CTableTable(TokenType.TABLE, TokenType.id, Grammatic.ConteudoTabela),
+                                // Olha a action aqui                 // Elemento sinthesized
+    CTableTable(TokenType.TABLE, ActionElements.passUp, TokenType.id, SynthesizedElements.Print, Grammatic.ConteudoTabela),
     ConteudoTabelaOPEN_PARENTHESIS(TokenType.OPEN_PARENTHESIS, Grammatic.Elemento, TokenType.CLOSE_PARENTHESIS),
     ElementoId(Grammatic.Coluna, Grammatic.ElementoPrime),
     ColunaId(TokenType.id, Grammatic.DataType, Grammatic.Condition),

@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 public class Tokenizer {
 	public static ArrayList<Token> getTokens (String input) {
         ArrayList<Token> tokens = Identifier.identifyTokens(input);
-        tokens.add(new Token(TokenType.EOF, ""));
+        tokens.add(new Token(TokenType.EOF, null));
         System.out.println(tokens);
         return tokens;
 	}
