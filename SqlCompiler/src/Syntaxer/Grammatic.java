@@ -3,13 +3,6 @@ package Syntaxer;
 import java.util.*;
 import GrammaticalElement.*;
 
-class SaveAct implements ActionInterface {
-    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
-        System.out.print("Save code ");
-        System.out.println(attrs.get("code"));
-    }
-}
-
 public enum Grammatic implements GrammaticalInterface {
     START, Command, CommandPrime, Create, UDatabase, ATable, DTable, CmdInsert, CmdDelete, CmdSelect, CreatePrime, CDatabase, CTable, ConteudoTabela, Elemento, Coluna, ElementoPrime, DataType, Condition, Stmt, Columns, ColumnValue, ColumnsValue, ColumnsPrime, ColumnsPrimePrime, ColumnValuePrime, ColumnValuePrimePrime, CmdWhere, Whereclausule, Operator, WhereclausulePrime, Logical, Tables, TablesPrime;
 
