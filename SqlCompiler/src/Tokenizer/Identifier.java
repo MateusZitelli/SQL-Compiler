@@ -37,7 +37,7 @@ public class Identifier {
     private static ArrayList<Character> aheadBuffer = new ArrayList<Character>();
 
     // Identifier general state
-    private static Iterator statesIterator;
+    private static Iterator<String> statesIterator;
     private static ArrayList<Token> tokens = new ArrayList<Token>();
     private static boolean firstRun = true;
 
@@ -609,8 +609,12 @@ public class Identifier {
                 // State of queue check
             case 16:
                 if(statesIterator.hasNext()){
-                    char nextChar = String.valueOf(statesIterator.next()).charAt(0);
-                    char inputChar = String.valueOf(letra).charAt(0);
+                    String next = statesIterator.next();
+                    // If actual value if null get the next 
+                    if(next.length() == 0) next = statesIterator.next();
+
+                    char nextChar = next.charAt(0);
+                    char inputChar = letra;
                     // is the chars dont match
                     if(nextChar != inputChar){
                         aheadReservedFound = false;
