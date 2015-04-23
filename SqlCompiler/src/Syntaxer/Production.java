@@ -36,7 +36,7 @@ class ActionElements {
 }
 
 public enum Production {
-    StartCommandPrime(Grammatic.CommandPrime, SynthesizedElements.Print),
+    StartCommandPrime(Grammatic.CommandPrime),
     CommandPrimeEps(),
     CommandPrimeCommand(Grammatic.Command, Grammatic.CommandPrime),
     CommandCreate(Grammatic.Create),

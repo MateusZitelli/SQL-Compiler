@@ -1,8 +1,15 @@
 package Syntaxer;
-import java.util.Stack;
-import java.util.ArrayList;
+import java.util.*;
 import Tokenizer.*;
 import GrammaticalElement.*;
+import Synthesized.*;
+
+class SaveAct implements ActionInterface {
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+        System.out.print("Save ");
+        System.out.println(attrs.get("code"));
+    }
+}
 
 public class Syntaxer { 
     public static ParsingTable table;
@@ -16,6 +23,8 @@ public class Syntaxer {
 
         System.out.println("(ง︡'-'︠)ง Sintax analsys:");
         
+        System.out.print("Stack: ");
+        System.out.println(stack);
         while(stack.size() > 0) {
             token = tokensList.get(position); 
             grammaticalElement = stack.pop(); 
@@ -60,8 +69,10 @@ public class Syntaxer {
     }
 
     public Syntaxer() {
+        Synthesized Save = new Synthesized(new SaveAct()); 
         this.table = new ParsingTable();
         stack.push(TokenType.EOF); 
+        stack.push(Save);
         stack.push(Grammatic.START);
     }
 }
