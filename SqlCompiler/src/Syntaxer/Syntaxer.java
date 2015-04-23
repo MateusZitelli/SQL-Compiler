@@ -47,6 +47,8 @@ public class Syntaxer {
                 for(int i = rule.productions.length - 1; i >= 0; i--){
                     stack.push(rule.productions[i]);
                 }
+            }else if(grammaticalElement.isAction()){
+                grammaticalElement.act(stack);
             }
             System.out.print("Stack: ");
             System.out.println(stack);

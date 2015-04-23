@@ -37,6 +37,14 @@ public class GrammaticalElement implements GrammaticalInterface {
         attrs.put(key, value);
     }
 
+    public void act(Stack<GrammaticalInterface> stack) {
+        action.act(stack);
+    }
+
+    public String name() {
+        return "GrammaticalElement";
+    }
+
     public GrammaticalElement (){
         attrs = new HashMap<String, String>();
         this.action = null;

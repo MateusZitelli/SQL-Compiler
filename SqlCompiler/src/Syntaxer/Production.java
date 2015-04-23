@@ -4,15 +4,16 @@ import java.util.*;
 
 import Tokenizer.*;
 import GrammaticalElement.*;
+import Action.*;
 
 class WhileAct implements ActionInterface {
-    public void act(ArrayList<GrammaticalElement> stack){
-        stack.get(stack.size() - 3).setAttr("teste", "false");
+    public void act(Stack<GrammaticalInterface> stack) {
+        stack.get(stack.size() - 1).setAttr("teste", "false");
     } 
 }
 
 public enum Production {
-    StartCommandPrime(Grammatic.CommandPrime),
+    StartCommandPrime(Grammatic.CommandPrime, new Action(new WhileAct())),
     CommandPrimeEps(),
     CommandPrimeCommand(Grammatic.Command, Grammatic.CommandPrime),
     CommandCreate(Grammatic.Create),
