@@ -3,16 +3,17 @@ package Syntaxer;
 import java.util.*;
 import Tokenizer.*;
 import Utils.*;
+import GrammaticalElement.*;
 
 public class ParsingTable {
     public static Map<Key, Production> table = new HashMap<Key, Production>();
 
-    public static void setRule(TokenType tokenType, Grammatic grammatic, Production production) {
+    public static void setRule(GrammaticalInterface tokenType, GrammaticalInterface grammatic, Production production) {
         // Map (tokenType, grammatic) -> production
         table.put(new Key(tokenType, grammatic), production);
     }
 
-    public static Production getRule(TokenType tokenType, Grammatic grammatic) {
+    public static Production getRule(GrammaticalInterface tokenType, GrammaticalInterface grammatic) {
         // Get rule at (tokenType, grammatic)
         return table.get(new Key(tokenType, grammatic));
     }

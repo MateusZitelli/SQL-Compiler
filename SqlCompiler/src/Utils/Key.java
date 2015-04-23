@@ -2,13 +2,14 @@ package Utils;
 
 import Tokenizer.*;
 import Syntaxer.*;
+import GrammaticalElement.*;
 
 public class Key {
 
-    private final TokenType x;
-    private final Grammatic y;
+    private final GrammaticalInterface x;
+    private final GrammaticalInterface y;
 
-    public Key(TokenType x, Grammatic y) {
+    public Key(GrammaticalInterface x, GrammaticalInterface y) {
         this.x = x;
         this.y = y;
     }

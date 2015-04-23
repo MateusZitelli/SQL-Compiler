@@ -1,7 +1,15 @@
 package Syntaxer;
 
-import java.util.Arrays;
+import java.util.*;
+
 import Tokenizer.*;
+import GrammaticalElement.*;
+
+class WhileAct implements ActionInterface {
+    public void act(ArrayList<GrammaticalElement> stack){
+        stack.get(stack.size() - 3).setAttr("teste", "false");
+    } 
+}
 
 public enum Production {
     StartCommandPrime(Grammatic.CommandPrime),
@@ -73,9 +81,9 @@ public enum Production {
     TablesPrimeComma(TokenType.COMMA, Grammatic.Tables),
     TablesPrimeWhere();
     
-    Object[] productions;
+    GrammaticalInterface[] productions;
 
-    private Production(Object... productions) {
+    private Production(GrammaticalInterface... productions) {
         this.productions = productions;
     }
 }

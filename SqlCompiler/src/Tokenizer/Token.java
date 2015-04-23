@@ -5,13 +5,14 @@ package Tokenizer;
  *Autores: Joao Flavio
  * 
  */
+import GrammaticalElement.*;
 
 public class Token {
 	
-	 public TokenType type;
+	 public GrammaticalInterface type;
      public Object data;
      
-     public Token(TokenType type, Object data) {
+     public Token(GrammaticalInterface type, Object data) {
          this.type = type;
          this.data = data;
      }

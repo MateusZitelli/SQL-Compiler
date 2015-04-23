@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class Tokenizer {
-    // Stores if the lex is ok without erros
-    public static boolean ok = true;
-
 	public static ArrayList<Token> getTokens (String input) {
         ArrayList<Token> tokens = Identifier.identifyTokens(input);
         tokens.add(new Token(TokenType.EOF, ""));

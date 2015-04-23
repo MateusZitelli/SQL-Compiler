@@ -5,9 +5,11 @@ package Tokenizer;
  *Autores: Joao Flavio e Mateus Zitelli
  * 
  */
-import java.util.regex.Pattern;
+import java.util.*;
 
-public enum TokenType {
+import GrammaticalElement.GrammaticalInterface;
+
+public enum TokenType implements GrammaticalInterface {
     // The order of the tokens implies in precedence
     CREATE(), 
     DATABASE(), 
@@ -51,4 +53,38 @@ public enum TokenType {
     number(),
     id(),
     ERROR();
+
+    private Map<String, String> attrs;
+
+    public boolean isTokenType() {
+        return true;
+    }
+
+    public boolean isGrammatic() {
+        return false;
+    }
+
+    public boolean isAction () {
+        return false;
+    }
+    
+    public boolean isSynthesized () {
+        return false;
+    }
+
+    public String getAttr(String key) {
+        return attrs.get(key);
+    }
+
+    public void setAttr(String key, String value) {
+        attrs.put(key, value);
+    }
+
+    private TokenType(String... attrs) {
+        this.attrs = new HashMap<String, String>();
+
+        for(String attr: attrs){
+            setAttr(attr, null);
+        }
+    }
 }

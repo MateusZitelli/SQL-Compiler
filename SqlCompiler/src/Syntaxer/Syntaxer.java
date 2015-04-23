@@ -2,39 +2,40 @@ package Syntaxer;
 import java.util.Stack;
 import java.util.ArrayList;
 import Tokenizer.*;
+import GrammaticalElement.*;
 
 public class Syntaxer { 
     public static ParsingTable table;
-    public static Stack<Object> stack = new Stack<Object>();
+    public static Stack<GrammaticalInterface> stack = new Stack<GrammaticalInterface>();
 
     public static void analyze(ArrayList<Token> tokensList) {
         int position = 0;
         Token token;
         Production rule;
-        Object expectedInput;
+        GrammaticalInterface grammaticalElement;
 
         System.out.println("(ง︡'-'︠)ง Sintax analsys:");
         
         while(stack.size() > 0) {
             token = tokensList.get(position); 
-            expectedInput = stack.pop(); 
-            if(expectedInput instanceof TokenType){
-                if(expectedInput == token.type){
+            grammaticalElement = stack.pop(); 
+            if(grammaticalElement.isTokenType()){
+                if(grammaticalElement == token.type){
                     position += 1; 
                     System.out.print("pop ");
                     System.out.println(token);
-                    if(expectedInput == TokenType.EOF){
+                    if(grammaticalElement == TokenType.EOF){
                         System.out.println("Accepted");
                     }
                 }else{
                     System.out.print("Bad input: ");
                     System.out.print(token);
                     System.out.print(" expected: ");
-                    System.out.println(expectedInput);
+                    System.out.println(grammaticalElement);
                     return;
                 }
-            }else if(expectedInput instanceof Grammatic){
-                rule = table.getRule(token.type, (Grammatic)expectedInput); 
+            }else if(grammaticalElement.isGrammatic()){
+                rule = table.getRule(token.type, (Grammatic)grammaticalElement); 
                 if(rule == null){
                     System.out.print("Bad input: ");
                     System.out.println(token);

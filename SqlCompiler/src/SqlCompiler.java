@@ -10,6 +10,7 @@ public class SqlCompiler {
     public static void main (String[] args) {
         String fileContent = null;
         Syntaxer syntaxer = new Syntaxer(); 
+
         try {
             fileContent = Utils.readFile();
         } catch(FileNotFoundException e) {
@@ -18,6 +19,6 @@ public class SqlCompiler {
         }
         
         ArrayList<Token> tokens = Tokenizer.getTokens(fileContent);
-        syntaxer.analyze(tokens);
+        Syntaxer.analyze(tokens);
     }
 }
