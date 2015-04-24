@@ -7,13 +7,13 @@ import GrammaticalElement.*;
 import Action.*;
 import Synthesized.*;
 
-class SetPrimaryKey implements ActionInterface{
+class PassData1Up implements ActionInterface {
     public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){}
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
-    System.out.println("############## Action #################");
-    System.out.println("Primary key, analogo ao this");
-    stack.get(stack.size() - 1).setAttr("this.", "id");
-    System.out.println("############################################");
+        stack.get(stack.size() - 1).setAttr("package", attrs.get("package"));
+        System.out.println("############### Saida ###############");
+        System.out.println("package " + attrs.get("package") + ";");
+        System.out.println("#####################################");
     }
 }
 
@@ -24,21 +24,33 @@ class PassData2Up implements ActionInterface {
     }
 }
 
+class ShowTable implements ActionInterface {
+    public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){}
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+        System.out.println("############### Saida ###############");
+        System.out.println("public class " + attrs.get("data"));
+        System.out.println("#####################################");
+    }
+}
+
 class CommandAct implements ActionInterface{
     public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){
-
+        attrs.put("package", parent.getAttr("package"));
     }
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
-        stack.get(stack.size() - 2).setAttr("package", attrs.get("data"));
+        stack.get(stack.size() - 2).setAttr("package", attrs.get("package"));
+        stack.get(stack.size() - 1).setAttr("package", attrs.get("package"));
+        System.out.println("Actual package: " + attrs.get("package") );
     }
 }
 
 class SynthesizedElements {
+    public static Synthesized UDatabase = new Synthesized(new PassData1Up());
     public static Synthesized UDatabaseUse = new Synthesized(new PassData2Up());
+    public static Synthesized TableId = new Synthesized(new ShowTable());
 }
 
 class ActionElements {
-    public static Action PrimaryKey = new Action(new SetPrimaryKey());
     public static Action Command = new Action(new CommandAct());
 }
 
@@ -47,7 +59,7 @@ public enum Production {
     CommandPrimeEps(),
     CommandPrimeCommand(ActionElements.Command, Grammatic.Command, Grammatic.CommandPrime),
     CommandCreate(Grammatic.Create),
-    CommandUse(Grammatic.UDatabase),
+    CommandUse(Grammatic.UDatabase, SynthesizedElements.UDatabase),
     CommandAlter(Grammatic.ATable),
     CommandDrop(Grammatic.DTable),
     CommandTruncate(Grammatic.DTable),
@@ -66,7 +78,7 @@ public enum Production {
     CreatePrimeTable(Grammatic.CTable),
     CreatePrimeId(Grammatic.CTable),
     CDatabaseDatabase(TokenType.DATABASE, TokenType.id, TokenType.END_STATEMENT),
-    CTableTable(TokenType.TABLE, TokenType.id, Grammatic.ConteudoTabela),
+    CTableTable(TokenType.TABLE, TokenType.id, SynthesizedElements.TableId, Grammatic.ConteudoTabela),
     ConteudoTabelaOPEN_PARENTHESIS(TokenType.OPEN_PARENTHESIS, Grammatic.Elemento, TokenType.CLOSE_PARENTHESIS),
     ElementoId(Grammatic.Coluna, Grammatic.ElementoPrime),
     ColunaId(TokenType.id, Grammatic.DataType, Grammatic.Condition),
@@ -80,7 +92,7 @@ public enum Production {
     ConditionCLOSE_PARENTHESIS(),
     ConditionComma(),
     ConditionNot(TokenType.NOT, TokenType.NULL, Grammatic.Condition),
-    ConditionPrimary(TokenType.PRIMARY, TokenType.KEY, ActionElements.PrimaryKey, Grammatic.Condition),
+    ConditionPrimary(TokenType.PRIMARY, TokenType.KEY, Grammatic.Condition),
     ConditionAuto_increment(TokenType.AUTO_INCREMENT, Grammatic.Condition),
     ConditionForeign(TokenType.FOREIGN, TokenType.KEY, TokenType.OPEN_PARENTHESIS, TokenType.id, TokenType.CLOSE_PARENTHESIS, TokenType.REFERENCES, TokenType.id, TokenType.OPEN_PARENTHESIS, TokenType.id, TokenType.CLOSE_PARENTHESIS, Grammatic.Condition),    
     StmtAdd(TokenType.ADD, Grammatic.ConteudoTabela),
