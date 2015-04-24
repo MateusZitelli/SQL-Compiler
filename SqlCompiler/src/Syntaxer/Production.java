@@ -27,15 +27,37 @@ class PassUpAct implements ActionInterface {
     }
 }
 
+class Act0 implements ActionInterface {
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+        TipoX L1 = new();
+        TipoX L2 = new();
+        // Isso não vai funcionar pois os atributos só aceitam strings, mas vale o ex.
+        stack.get(stack.size() - 1).setAttr("true", L2);
+        stack.get(stack.size() - 4).setAttr("next", L1);
+        stack.get(stack.size() - 5).setAttr("l1", L1);
+        stack.get(stack.size() - 5).setAttr("l2", L2);
+    }
+}
+class Act0 implements ActionInterface {
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+        stack.get(stack.size() - 3).setAttr("Ccode", attrs.get("code"));
+    }
+}
+
 class SynthesizedElements {
     public static Synthesized Print = new Synthesized(new FinalizeAct()); 
+    public static Synthesized C = new Synthesized(new CAct()); 
 }
 
 class ActionElements {
     public static Action passUp = new Action(new PassUpAct()); 
+    public static Action Action0 = new Action(new Act0()); 
 }
 
 public enum Production {
+    //Exemplo
+    Start(Grammatic.StartExemplo),
+    While(TokenType.While, TokenType.OPEN_PARENTHESIS, Actions.Elements.Action0, Grammatic.C, SynthesizedElements.C ...)
     StartCommandPrime(Grammatic.CommandPrime),
     CommandPrimeEps(),
     CommandPrimeCommand(Grammatic.Command, Grammatic.CommandPrime),
