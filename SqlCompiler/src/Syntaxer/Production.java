@@ -7,28 +7,12 @@ import GrammaticalElement.*;
 import Action.*;
 import Synthesized.*;
 
-class FinalizeAct implements ActionInterface {
+class SetPrimaryKey implements ActionInterface{
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
-        System.out.println("############## Synthesized #################");
-        System.out.println("Printa o atributo data recebido do token anterior");
-        System.out.println(attrs.get("data"));
-        System.out.println("Passa ele para o elemento a cima na stack");
-        stack.get(stack.size() - 1).setAttr("id", attrs.get("data"));
-        System.out.println("############################################");
-    }
-}
-
-class ComPrime implements ActionInterface{
-    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
-        System.out.println("############## Synthesized #################");
-        stack.get(stack.size() - 1).setAttr("begin", attrs.get("start"));
-        System.out.println("############################################");
-    }
-}
-
-class PassUpAct implements ActionInterface {
-    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
-        stack.get(stack.size() - 1).setAttr("syn", "mkdir");
+    System.out.println("############## Action #################");
+    System.out.println("Primary key, analogo ao this");
+    stack.get(stack.size() - 1).setAttr("this.", "id");
+    System.out.println("############################################");
     }
 }
 
@@ -39,13 +23,11 @@ class PassData2Up implements ActionInterface {
 }
 
 class SynthesizedElements {
-    public static Synthesized Print = new Synthesized(new FinalizeAct()); 
-    public static Synthesized CommandPrime = new Synthesized(new ComPrime());
     public static Synthesized UDatabaseUse = new Synthesized(new PassData2Up());
 }
 
 class ActionElements {
-    public static Action passUp = new Action(new PassUpAct()); 
+    public static Action PrimaryKey =  new Action(new SetPrimaryKey());
 }
 
 public enum Production {
@@ -72,8 +54,7 @@ public enum Production {
     CreatePrimeTable(Grammatic.CTable),
     CreatePrimeId(Grammatic.CTable),
     CDatabaseDatabase(TokenType.DATABASE, TokenType.id, TokenType.END_STATEMENT),
-                                // Olha a action aqui                 // Elemento sinthesized
-    CTableTable(TokenType.TABLE, ActionElements.passUp, TokenType.id, SynthesizedElements.Print, Grammatic.ConteudoTabela),
+    CTableTable(TokenType.TABLE, TokenType.id, Grammatic.ConteudoTabela),
     ConteudoTabelaOPEN_PARENTHESIS(TokenType.OPEN_PARENTHESIS, Grammatic.Elemento, TokenType.CLOSE_PARENTHESIS),
     ElementoId(Grammatic.Coluna, Grammatic.ElementoPrime),
     ColunaId(TokenType.id, Grammatic.DataType, Grammatic.Condition),
@@ -87,7 +68,7 @@ public enum Production {
     ConditionCLOSE_PARENTHESIS(),
     ConditionComma(),
     ConditionNot(TokenType.NOT, TokenType.NULL, Grammatic.Condition),
-    ConditionPrimary(TokenType.PRIMARY, TokenType.KEY, Grammatic.Condition),
+    ConditionPrimary(TokenType.PRIMARY, TokenType.KEY, ActionElements.PrimaryKey, Grammatic.Condition),
     ConditionAuto_increment(TokenType.AUTO_INCREMENT, Grammatic.Condition),
     ConditionForeign(TokenType.FOREIGN, TokenType.KEY, TokenType.OPEN_PARENTHESIS, TokenType.id, TokenType.CLOSE_PARENTHESIS, TokenType.REFERENCES, TokenType.id, TokenType.OPEN_PARENTHESIS, TokenType.id, TokenType.CLOSE_PARENTHESIS, Grammatic.Condition),    
     StmtAdd(TokenType.ADD, Grammatic.ConteudoTabela),
