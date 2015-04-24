@@ -32,6 +32,7 @@ class SetPrimaryKey implements ActionInterface{
     System.out.println("############## Action #################");
     System.out.println("Primary key, analogo ao this");
     stack.get(stack.size() - 1).setAttr("this.", "id");
+    System.out.println("############################################");
     }
 }
 
@@ -40,7 +41,6 @@ class PassUpAct implements ActionInterface {
         System.out.println("############## Action #################");
         System.out.println("Passou informações para o prox. elemento da stack");
         stack.get(stack.size() - 1).setAttr("code", "mkdir");
-        System.out.println("############################################");
         System.out.println("############################################");
     }
 }
