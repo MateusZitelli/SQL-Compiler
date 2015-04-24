@@ -55,9 +55,6 @@ class ActionElements {
 }
 
 public enum Production {
-    //Exemplo
-    Start(Grammatic.StartExemplo),
-    While(TokenType.While, TokenType.OPEN_PARENTHESIS, Actions.Elements.Action0, Grammatic.C, SynthesizedElements.C ...)
     StartCommandPrime(Grammatic.CommandPrime),
     CommandPrimeEps(),
     CommandPrimeCommand(Grammatic.Command, Grammatic.CommandPrime),
