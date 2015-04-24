@@ -27,11 +27,11 @@ class ComPrime implements ActionInterface{
     }
 }
 
-class SetPrimary implements ActionInterface{
+class SetPrimaryKey implements ActionInterface{
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
     System.out.println("############## Action #################");
     System.out.println("Primary key, analogo ao this");
-    stack.get(stack.size() - 1).setAttr("this");
+    stack.get(stack.size() - 1).setAttr("this.", "id");
     }
 }
 
@@ -70,7 +70,7 @@ class SynthesizedElements {
 
 class ActionElements {
     public static Action passUp = new Action(new PassUpAct());
-    public static Action Primary =  new Action(new SetPrimary());
+    public static Action PrimaryKey =  new Action(new SetPrimaryKey());
     //public static Action Action0 = new Action(new Act0()); 
 }
 
@@ -116,7 +116,7 @@ public enum Production {
     ConditionCLOSE_PARENTHESIS(),
     ConditionComma(),
     ConditionNot(TokenType.NOT, TokenType.NULL, Grammatic.Condition),
-    ConditionPrimary(TokenType.PRIMARY, ActionElements.Primary, TokenType.KEY, Grammatic.Condition),
+    ConditionPrimary(TokenType.PRIMARY, TokenType.KEY, ActionElements.PrimaryKey, Grammatic.Condition),
     ConditionAuto_increment(TokenType.AUTO_INCREMENT, Grammatic.Condition),
     ConditionForeign(TokenType.FOREIGN, TokenType.KEY, TokenType.OPEN_PARENTHESIS, TokenType.id, TokenType.CLOSE_PARENTHESIS, TokenType.REFERENCES, TokenType.id, TokenType.OPEN_PARENTHESIS, TokenType.id, TokenType.CLOSE_PARENTHESIS, Grammatic.Condition),    
     StmtAdd(TokenType.ADD, Grammatic.ConteudoTabela),
