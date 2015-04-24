@@ -18,6 +18,14 @@ class FinalizeAct implements ActionInterface {
     }
 }
 
+class ComPrime implements ActionInterface{
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+        System.out.println("############## Synthesized #################");
+        stack.get(stack.size() - 1).setAttr("begin", attrs.get("start"));
+        System.out.println("############################################");
+    }
+}
+
 class PassUpAct implements ActionInterface {
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
         System.out.println("############## Action #################");
@@ -27,7 +35,7 @@ class PassUpAct implements ActionInterface {
     }
 }
 
-class Act0 implements ActionInterface {
+/*class Act0 implements ActionInterface {
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
         TipoX L1 = new();
         TipoX L2 = new();
@@ -42,23 +50,24 @@ class Act0 implements ActionInterface {
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
         stack.get(stack.size() - 3).setAttr("Ccode", attrs.get("code"));
     }
-}
+}*/
 
 class SynthesizedElements {
     public static Synthesized Print = new Synthesized(new FinalizeAct()); 
-    public static Synthesized C = new Synthesized(new CAct()); 
+    //public static Synthesized C = new Synthesized(new CAct()); 
+    public static Synthesized CommandPrime = new Synthesized(new ComPrim());
 }
 
 class ActionElements {
     public static Action passUp = new Action(new PassUpAct()); 
-    public static Action Action0 = new Action(new Act0()); 
+    //public static Action Action0 = new Action(new Act0()); 
 }
 
 public enum Production {
     //Exemplo
-    Start(Grammatic.StartExemplo),
-    While(TokenType.While, TokenType.OPEN_PARENTHESIS, Actions.Elements.Action0, Grammatic.C, SynthesizedElements.C ...)
-    StartCommandPrime(Grammatic.CommandPrime),
+    /*Start(Grammatic.StartExemplo),
+    While(TokenType.While, TokenType.OPEN_PARENTHESIS, Actions.Elements.Action0, Grammatic.C, SynthesizedElements.C ...)*/
+    StartCommandPrime(Grammatic.CommandPrime, SynthesizedElements.CommandPrime),
     CommandPrimeEps(),
     CommandPrimeCommand(Grammatic.Command, Grammatic.CommandPrime),
     CommandCreate(Grammatic.Create),
