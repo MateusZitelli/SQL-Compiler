@@ -54,7 +54,7 @@ public enum TokenType implements GrammaticalInterface {
     id(),
     ERROR();
 
-    public ActionInterface action;
+    public ActionInterface action = null;
 
     private Map<String, String> attrs;
 
@@ -82,9 +82,15 @@ public enum TokenType implements GrammaticalInterface {
         attrs.put(key, value);
     }
 
+    public void getFromParent(GrammaticalInterface parent) {
+        if(action != null)
+            action.getFromParent(parent, attrs);
+    }
+
     public void act(Stack<GrammaticalInterface> stack) {
         // Sould not be used
-        action.act(stack, attrs);
+        if(action != null)
+            action.act(stack, attrs);
     }
 
     private TokenType(String... attrs) {

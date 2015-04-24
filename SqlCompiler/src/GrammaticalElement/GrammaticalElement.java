@@ -41,6 +41,10 @@ public class GrammaticalElement implements GrammaticalInterface {
         action.act(stack, attrs);
     }
 
+    public void getFromParent(GrammaticalInterface parent) {
+        action.getFromParent(parent, attrs);
+    }
+
     public String name() {
         return "GrammaticalElement";
     }

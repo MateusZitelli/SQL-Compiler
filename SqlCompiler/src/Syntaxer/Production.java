@@ -8,6 +8,7 @@ import Action.*;
 import Synthesized.*;
 
 class SetPrimaryKey implements ActionInterface{
+    public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){}
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
     System.out.println("############## Action #################");
     System.out.println("Primary key, analogo ao this");
@@ -17,6 +18,16 @@ class SetPrimaryKey implements ActionInterface{
 }
 
 class PassData2Up implements ActionInterface {
+    public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){}
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+        stack.get(stack.size() - 2).setAttr("package", attrs.get("data"));
+    }
+}
+
+class CommandAct implements ActionInterface{
+    public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){
+
+    }
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
         stack.get(stack.size() - 2).setAttr("package", attrs.get("data"));
     }
@@ -27,13 +38,14 @@ class SynthesizedElements {
 }
 
 class ActionElements {
-    public static Action PrimaryKey =  new Action(new SetPrimaryKey());
+    public static Action PrimaryKey = new Action(new SetPrimaryKey());
+    public static Action Command = new Action(new CommandAct());
 }
 
 public enum Production {
     StartCommandPrime(Grammatic.CommandPrime),
     CommandPrimeEps(),
-    CommandPrimeCommand(Grammatic.Command, Grammatic.CommandPrime),
+    CommandPrimeCommand(ActionElements.Command, Grammatic.Command, Grammatic.CommandPrime),
     CommandCreate(Grammatic.Create),
     CommandUse(Grammatic.UDatabase),
     CommandAlter(Grammatic.ATable),

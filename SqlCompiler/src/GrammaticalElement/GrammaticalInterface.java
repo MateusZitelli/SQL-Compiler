@@ -11,5 +11,6 @@ public interface GrammaticalInterface {
     String getAttr(String key);
     String name();
     void act(Stack<GrammaticalInterface> stack);
+    void getFromParent(GrammaticalInterface parent);
 }
 

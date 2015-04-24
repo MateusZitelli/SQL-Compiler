@@ -24,11 +24,17 @@ public enum Grammatic implements GrammaticalInterface {
         return false;
     }
 
-    public void act(Stack<GrammaticalInterface> stack) {
-        action.act(stack, attrs);
+    public void getFromParent(GrammaticalInterface parent) {
+        if(action != null)
+            action.getFromParent(parent, this.attrs);
     }
 
-    private Map<String, String> attrs;
+    public void act(Stack<GrammaticalInterface> stack) {
+        if(action != null)
+            action.act(stack, attrs);
+    }
+
+    private Map<String, String> attrs = new HashMap<String, String>();
 
     public String getAttr(String key) {
         return attrs.get(key);

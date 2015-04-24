@@ -5,6 +5,7 @@ import GrammaticalElement.*;
 import Synthesized.*;
 
 class SaveAct implements ActionInterface {
+    public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){}
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
         System.out.print("Save ");
         System.out.println(attrs.get("code"));
@@ -58,7 +59,9 @@ public class Syntaxer {
                 System.out.println(rule);
                 // Stack expected instructions
                 for(int i = rule.productions.length - 1; i >= 0; i--){
-                    stack.push(rule.productions[i]);
+                    GrammaticalInterface nextRule = rule.productions[i];
+                    nextRule.getFromParent(grammaticalElement);
+                    stack.push(nextRule);
                 }
             }else if(grammaticalElement.isAction()){
                 grammaticalElement.act(stack);
