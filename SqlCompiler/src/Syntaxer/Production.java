@@ -27,11 +27,20 @@ class ComPrime implements ActionInterface{
     }
 }
 
+class SetPrimary implements ActionInterface{
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+    System.out.println("############## Action #################");
+    System.out.println("Primary key, analogo ao this");
+    stack.get(stack.size() - 1).setAttr("this");
+    }
+}
+
 class PassUpAct implements ActionInterface {
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
         System.out.println("############## Action #################");
         System.out.println("Passou informações para o prox. elemento da stack");
         stack.get(stack.size() - 1).setAttr("code", "mkdir");
+        System.out.println("############################################");
         System.out.println("############################################");
     }
 }
@@ -60,7 +69,8 @@ class SynthesizedElements {
 }
 
 class ActionElements {
-    public static Action passUp = new Action(new PassUpAct()); 
+    public static Action passUp = new Action(new PassUpAct());
+    public static Action Primary =  new Action(new SetPrimary());
     //public static Action Action0 = new Action(new Act0()); 
 }
 
@@ -106,7 +116,7 @@ public enum Production {
     ConditionCLOSE_PARENTHESIS(),
     ConditionComma(),
     ConditionNot(TokenType.NOT, TokenType.NULL, Grammatic.Condition),
-    ConditionPrimary(TokenType.PRIMARY, TokenType.KEY, Grammatic.Condition),
+    ConditionPrimary(TokenType.PRIMARY, ActionElements.Primary, TokenType.KEY, Grammatic.Condition),
     ConditionAuto_increment(TokenType.AUTO_INCREMENT, Grammatic.Condition),
     ConditionForeign(TokenType.FOREIGN, TokenType.KEY, TokenType.OPEN_PARENTHESIS, TokenType.id, TokenType.CLOSE_PARENTHESIS, TokenType.REFERENCES, TokenType.id, TokenType.OPEN_PARENTHESIS, TokenType.id, TokenType.CLOSE_PARENTHESIS, Grammatic.Condition),    
     StmtAdd(TokenType.ADD, Grammatic.ConteudoTabela),
