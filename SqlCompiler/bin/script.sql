@@ -1,4 +1,4 @@
-drop table primary_117;
+use primary_117;
 CREATE TABLE Persons(
 P_Id numeric(1) NOT NULL PRIMARY KEY,
 LastName varchar(255) NOT NULL,

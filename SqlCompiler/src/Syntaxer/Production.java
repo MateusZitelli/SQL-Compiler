@@ -18,40 +18,34 @@ class FinalizeAct implements ActionInterface {
     }
 }
 
-class PassUpAct implements ActionInterface {
+class ComPrime implements ActionInterface{
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
-        System.out.println("############## Action #################");
-        System.out.println("Passou informações para o prox. elemento da stack");
-        stack.get(stack.size() - 1).setAttr("code", "mkdir");
+        System.out.println("############## Synthesized #################");
+        stack.get(stack.size() - 1).setAttr("begin", attrs.get("start"));
         System.out.println("############################################");
     }
 }
 
-class Act0 implements ActionInterface {
+class PassUpAct implements ActionInterface {
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
-        TipoX L1 = new();
-        TipoX L2 = new();
-        // Isso não vai funcionar pois os atributos só aceitam strings, mas vale o ex.
-        stack.get(stack.size() - 1).setAttr("true", L2);
-        stack.get(stack.size() - 4).setAttr("next", L1);
-        stack.get(stack.size() - 5).setAttr("l1", L1);
-        stack.get(stack.size() - 5).setAttr("l2", L2);
+        stack.get(stack.size() - 1).setAttr("syn", "mkdir");
     }
 }
-class Act0 implements ActionInterface {
+
+class PassData2Up implements ActionInterface {
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
-        stack.get(stack.size() - 3).setAttr("Ccode", attrs.get("code"));
+        stack.get(stack.size() - 2).setAttr("package", attrs.get("data"));
     }
 }
 
 class SynthesizedElements {
     public static Synthesized Print = new Synthesized(new FinalizeAct()); 
-    public static Synthesized C = new Synthesized(new CAct()); 
+    public static Synthesized CommandPrime = new Synthesized(new ComPrime());
+    public static Synthesized UDatabaseUse = new Synthesized(new PassData2Up());
 }
 
 class ActionElements {
     public static Action passUp = new Action(new PassUpAct()); 
-    public static Action Action0 = new Action(new Act0()); 
 }
 
 public enum Production {
@@ -67,7 +61,7 @@ public enum Production {
     CommandDelete(Grammatic.CmdDelete),
     CommandSelect(Grammatic.CmdSelect),    
     CreateCreate(TokenType.CREATE, Grammatic.CreatePrime),
-    UDatabaseUse(TokenType.USE, TokenType.id, TokenType.END_STATEMENT),
+    UDatabaseUse(TokenType.USE, TokenType.id, SynthesizedElements.UDatabaseUse, TokenType.END_STATEMENT),
     ATableAlter(TokenType.ALTER, TokenType.TABLE, TokenType.id, Grammatic.Stmt),
     DTableDrop(TokenType.DROP, TokenType.TABLE, TokenType.id, TokenType.END_STATEMENT),
     DTableTruncate(TokenType.TRUNCATE, TokenType.TABLE, TokenType.id, TokenType.END_STATEMENT),
