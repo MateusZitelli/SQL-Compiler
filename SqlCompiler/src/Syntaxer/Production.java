@@ -21,6 +21,7 @@ class FinalizeAct implements ActionInterface {
 class ComPrime implements ActionInterface{
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
         System.out.println("############## Synthesized #################");
+        System.out.println("Simbolo de START");      
         stack.get(stack.size() - 1).setAttr("begin", attrs.get("start"));
         System.out.println("############################################");
     }
@@ -55,7 +56,7 @@ class Act0 implements ActionInterface {
 class SynthesizedElements {
     public static Synthesized Print = new Synthesized(new FinalizeAct()); 
     //public static Synthesized C = new Synthesized(new CAct()); 
-    public static Synthesized CommandPrime = new Synthesized(new ComPrim());
+    public static Synthesized CommandPrime = new Synthesized(new ComPrime());
 }
 
 class ActionElements {
