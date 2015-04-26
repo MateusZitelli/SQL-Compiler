@@ -138,8 +138,16 @@ class PrintColumn implements ActionInterface{
     public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){ }
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
         String type = attrs.get("type");
+        if(attrs.get("primary_key") == "true"){
+            OutputBuffer.add("@Id\n");
+        }
         if(attrs.get("not_null") == "true"){
             OutputBuffer.add("@Column(nullable = false)\n");
+        }else{
+            OutputBuffer.add("@Column\n");
+        }
+        if(attrs.get("auto_increment") == "true"){
+            OutputBuffer.add("@GeneratedValue(strategy=GenerationType.AUTO)\n");
         }
         OutputBuffer.add("public ");
         if(type == "numeric"){
