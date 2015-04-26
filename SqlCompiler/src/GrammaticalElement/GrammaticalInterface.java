@@ -10,6 +10,7 @@ public interface GrammaticalInterface {
     void setAttr(String key, String value);
     String getAttr(String key);
     String name();
+    void cleanAttrs();
     void act(Stack<GrammaticalInterface> stack);
     void getFromParent(GrammaticalInterface parent);
 }

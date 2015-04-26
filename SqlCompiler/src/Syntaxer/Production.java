@@ -9,8 +9,19 @@ import Synthesized.*;
 
 class OutputBuffer {
     public static ArrayList<String> buffer = new ArrayList<String>();
+    public static int identation = 0;
+    public static void addIdentation (){
+        identation += 1;
+    }
+    public static void rmIdentation (){
+        identation -= 1;
+    }
     public static void add(String output){
-        buffer.add(output);
+        StringBuffer b = new StringBuffer();
+        for(int i = 0; i < identation; i++){
+            b.append("  ");
+        }
+        buffer.add(b + output);
         System.out.println(buffer);
     }
 }
@@ -68,10 +79,48 @@ class PassDataType2Up implements ActionInterface {
     }
 }
 
+class AddNotNull2Up implements ActionInterface {
+    public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){}
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+        if(stack.get(stack.size() - 2).getAttr("not_null") != null){
+            System.out.println("Error: duplicated NOT NULL condition.");
+            return;
+        }
+        stack.get(stack.size() - 2).setAttr("not_null", "true");
+    }
+}
+
+class AddAutoIncrement2Up implements ActionInterface {
+    public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){}
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+        if(stack.get(stack.size() - 2).getAttr("auto_increment") != null){
+            System.out.println("Error: duplicated AUTO_INCREMENT condition.");
+            return;
+        }
+        stack.get(stack.size() - 2).setAttr("auto_increment", "true");
+    }
+}
+
+class AddPrimaryKey2Up implements ActionInterface {
+    public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){}
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+        if(stack.get(stack.size() - 2).getAttr("primary_key") != null){
+            System.out.println("Error: duplicated PRIMARY KEY condition.");
+            return;
+        }
+        stack.get(stack.size() - 2).setAttr("primary_key", "true");
+    }
+}
+
 class ShowTable implements ActionInterface {
     public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){}
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
-        OutputBuffer.add("public class " + attrs.get("data") + " {\n");
+        String name = attrs.get("data");
+        String capitalized = Character.toUpperCase(name.charAt(0)) + name.substring(1);
+        OutputBuffer.add("@Entity\n");
+        OutputBuffer.add("@Table(name=\"" + name + "\")\n");
+        OutputBuffer.add("public class " + capitalized + " {\n");
+        OutputBuffer.addIdentation();
     }
 }
 
@@ -89,6 +138,9 @@ class PrintColumn implements ActionInterface{
     public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){ }
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
         String type = attrs.get("type");
+        if(attrs.get("not_null") == "true"){
+            OutputBuffer.add("@Column(nullable = false)\n");
+        }
         OutputBuffer.add("public ");
         if(type == "numeric"){
             OutputBuffer.add("int ");
@@ -118,6 +170,9 @@ class SynthesizedElements {
     public static Synthesized DatatypeInt = new Synthesized(new ShowTable());
     public static Synthesized DataType = new Synthesized(new PassDataType2Up());
     public static Synthesized CreateTable = new Synthesized(new CreateTable());
+    public static Synthesized NotNull = new Synthesized(new AddNotNull2Up());
+    public static Synthesized PrimaryKey = new Synthesized(new AddPrimaryKey2Up());
+    public static Synthesized AutoIncrement = new Synthesized(new AddAutoIncrement2Up());
 }
 
 class ActionElements {
@@ -161,9 +216,9 @@ public enum Production {
     DataTypeDate(TokenType.date),
     ConditionCLOSE_PARENTHESIS(),
     ConditionComma(),
-    ConditionNot(TokenType.NOT, TokenType.NULL, Grammatic.Condition),
-    ConditionPrimary(TokenType.PRIMARY, TokenType.KEY, Grammatic.Condition),
-    ConditionAuto_increment(TokenType.AUTO_INCREMENT, Grammatic.Condition),
+    ConditionNot(TokenType.NOT, TokenType.NULL, SynthesizedElements.NotNull, Grammatic.Condition),
+    ConditionPrimary(TokenType.PRIMARY, TokenType.KEY, SynthesizedElements.PrimaryKey, Grammatic.Condition),
+    ConditionAuto_increment(TokenType.AUTO_INCREMENT, SynthesizedElements.AutoIncrement, Grammatic.Condition),
     ConditionForeign(TokenType.FOREIGN, TokenType.KEY, TokenType.OPEN_PARENTHESIS, TokenType.id, TokenType.CLOSE_PARENTHESIS, TokenType.REFERENCES, TokenType.id, TokenType.OPEN_PARENTHESIS, TokenType.id, TokenType.CLOSE_PARENTHESIS, Grammatic.Condition),    
     StmtAdd(TokenType.ADD, Grammatic.ConteudoTabela),
     StmtDrop(TokenType.DROP, Grammatic.ConteudoTabela),

@@ -61,6 +61,9 @@ public class Syntaxer {
                 for(int i = rule.productions.length - 1; i >= 0; i--){
                     GrammaticalInterface nextRule = rule.productions[i];
                     nextRule.getFromParent(grammaticalElement);
+                    if(nextRule.isAction()) {
+                        nextRule.cleanAttrs();
+                    }
                     stack.push(nextRule);
                 }
             }else if(grammaticalElement.isAction()){

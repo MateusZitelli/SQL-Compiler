@@ -49,11 +49,15 @@ public class GrammaticalElement implements GrammaticalInterface {
         return "GrammaticalElement";
     }
 
+    public void cleanAttrs() {
+        attrs = new HashMap<String, String>();
+    }
+
     public GrammaticalElement (){
         attrs = new HashMap<String, String>();
         this.action = null;
     }
-
+    
     public GrammaticalElement (ActionInterface action){
         attrs = new HashMap<String, String>();
         this.action = action;
