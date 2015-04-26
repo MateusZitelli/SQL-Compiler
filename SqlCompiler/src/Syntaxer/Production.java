@@ -7,13 +7,19 @@ import GrammaticalElement.*;
 import Action.*;
 import Synthesized.*;
 
-class PassData1Up implements ActionInterface {
+class OutputBuffer {
+    public static ArrayList<String> buffer = new ArrayList<String>();
+    public static void add(String output){
+        buffer.add(output);
+        System.out.println(buffer);
+    }
+}
+
+class PassPackage1Up implements ActionInterface {
     public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){}
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
         stack.get(stack.size() - 1).setAttr("package", attrs.get("package"));
-        System.out.println("############### Saida ###############");
-        System.out.println("package " + attrs.get("package") + ";");
-        System.out.println("#####################################");
+        OutputBuffer.add("package " + attrs.get("package") + ";\n");
     }
 }
 
@@ -24,12 +30,48 @@ class PassData2Up implements ActionInterface {
     }
 }
 
+class PassColumnId4Up implements ActionInterface {
+    public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){}
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+        stack.get(stack.size() - 4).setAttr("id", attrs.get("data"));
+    }
+}
+
+class PassDatatypeSize2Up implements ActionInterface {
+    public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){}
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+        stack.get(stack.size() - 2).setAttr("size", attrs.get("data"));
+    }
+}
+
+class PassNumericTypeUp implements ActionInterface {
+    public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){}
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+        stack.get(stack.size() - 1).setAttr("type", "numeric");
+        stack.get(stack.size() - 1).setAttr("size", attrs.get("size"));
+    }
+}
+
+class PassVarcharTypeUp implements ActionInterface {
+    public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){}
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+        stack.get(stack.size() - 1).setAttr("type", "varchar");
+        stack.get(stack.size() - 1).setAttr("size", attrs.get("size"));
+    }
+}
+
+class PassDataType2Up implements ActionInterface {
+    public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){}
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+        stack.get(stack.size() - 2).setAttr("type", attrs.get("type"));
+        stack.get(stack.size() - 2).setAttr("size", attrs.get("size"));
+    }
+}
+
 class ShowTable implements ActionInterface {
     public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){}
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
-        System.out.println("############### Saida ###############");
-        System.out.println("public class " + attrs.get("data"));
-        System.out.println("#####################################");
+        OutputBuffer.add("public class " + attrs.get("data") + " {\n");
     }
 }
 
@@ -40,14 +82,42 @@ class CommandAct implements ActionInterface{
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
         stack.get(stack.size() - 2).setAttr("package", attrs.get("package"));
         stack.get(stack.size() - 1).setAttr("package", attrs.get("package"));
-        System.out.println("Actual package: " + attrs.get("package") );
+    }
+}
+
+class PrintColumn implements ActionInterface{
+    public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){ }
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+        String type = attrs.get("type");
+        OutputBuffer.add("public ");
+        if(type == "numeric"){
+            OutputBuffer.add("int ");
+        }else if(type == "varchar"){
+            OutputBuffer.add("String ");
+        }
+        OutputBuffer.add(attrs.get("id") + ";\n");
+    }
+}
+
+class CreateTable implements ActionInterface{
+    public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){ }
+    public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>> EEEEEEEEEEENNNNDDDDDDDD");
     }
 }
 
 class SynthesizedElements {
-    public static Synthesized UDatabase = new Synthesized(new PassData1Up());
+    public static Synthesized UDatabase = new Synthesized(new PassPackage1Up());
     public static Synthesized UDatabaseUse = new Synthesized(new PassData2Up());
     public static Synthesized TableId = new Synthesized(new ShowTable());
+    public static Synthesized ColumnId = new Synthesized(new PassColumnId4Up());
+    public static Synthesized Column = new Synthesized(new PrintColumn());
+    public static Synthesized DatatypeSize = new Synthesized(new PassDatatypeSize2Up());
+    public static Synthesized DatatypeNumeric = new Synthesized(new PassNumericTypeUp());
+    public static Synthesized DatatypeVarchar = new Synthesized(new PassVarcharTypeUp());
+    public static Synthesized DatatypeInt = new Synthesized(new ShowTable());
+    public static Synthesized DataType = new Synthesized(new PassDataType2Up());
+    public static Synthesized CreateTable = new Synthesized(new CreateTable());
 }
 
 class ActionElements {
@@ -78,16 +148,16 @@ public enum Production {
     CreatePrimeTable(Grammatic.CTable),
     CreatePrimeId(Grammatic.CTable),
     CDatabaseDatabase(TokenType.DATABASE, TokenType.id, TokenType.END_STATEMENT),
-    CTableTable(TokenType.TABLE, TokenType.id, SynthesizedElements.TableId, Grammatic.ConteudoTabela),
+    CTableTable(TokenType.TABLE, TokenType.id, SynthesizedElements.TableId, Grammatic.ConteudoTabela, SynthesizedElements.CreateTable),
     ConteudoTabelaOPEN_PARENTHESIS(TokenType.OPEN_PARENTHESIS, Grammatic.Elemento, TokenType.CLOSE_PARENTHESIS),
-    ElementoId(Grammatic.Coluna, Grammatic.ElementoPrime),
-    ColunaId(TokenType.id, Grammatic.DataType, Grammatic.Condition),
+    ElementoId(Grammatic.Coluna, SynthesizedElements.Column, Grammatic.ElementoPrime),
+    ColunaId(TokenType.id, SynthesizedElements.ColumnId, Grammatic.DataType, SynthesizedElements.DataType, Grammatic.Condition),
     ElementoPrimeCLOSE_PARENTHESIS(),
     ElementoPrimeComma(TokenType.COMMA, Grammatic.Elemento),
-    DataTypeInt(TokenType.integer),
-    DataTypeNumeric(TokenType.NUMERIC, TokenType.OPEN_PARENTHESIS, TokenType.integer, TokenType.CLOSE_PARENTHESIS),
+    DataTypeInt(TokenType.integer, SynthesizedElements.DatatypeInt),
+    DataTypeNumeric(TokenType.NUMERIC, TokenType.OPEN_PARENTHESIS, TokenType.integer, SynthesizedElements.DatatypeSize, TokenType.CLOSE_PARENTHESIS, SynthesizedElements.DatatypeNumeric),
     DataTypeChar(TokenType.CHAR, TokenType.OPEN_PARENTHESIS, TokenType.integer, TokenType.CLOSE_PARENTHESIS),
-    DataTypeVarchar(TokenType.VARCHAR, TokenType.OPEN_PARENTHESIS, TokenType.integer, TokenType.CLOSE_PARENTHESIS),
+    DataTypeVarchar(TokenType.VARCHAR, TokenType.OPEN_PARENTHESIS, TokenType.integer, SynthesizedElements.DatatypeSize, TokenType.CLOSE_PARENTHESIS, SynthesizedElements.DatatypeVarchar),
     DataTypeDate(TokenType.date),
     ConditionCLOSE_PARENTHESIS(),
     ConditionComma(),
