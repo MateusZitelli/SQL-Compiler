@@ -121,6 +121,7 @@ class ShowTable implements ActionInterface {
         OutputBuffer.add("@Table(name=\"" + name + "\")\n");
         OutputBuffer.add("public class " + capitalized + " {\n");
         OutputBuffer.addIdentation();
+        stack.get(stack.size() - 2).setAttr("className", capitalized);
     }
 }
 
@@ -138,6 +139,8 @@ class PrintColumn implements ActionInterface{
     public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){ }
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
         String type = attrs.get("type");
+        String columns = stack.get(stack.size() - 3).getAttr("columns");
+        String id = attrs.get("id");
         if(attrs.get("primary_key") == "true"){
             OutputBuffer.add("@Id\n");
         }
@@ -149,20 +152,41 @@ class PrintColumn implements ActionInterface{
         if(attrs.get("auto_increment") == "true"){
             OutputBuffer.add("@GeneratedValue(strategy=GenerationType.AUTO)\n");
         }
-        OutputBuffer.add("public ");
+        OutputBuffer.add("private ");
         if(type == "numeric"){
             OutputBuffer.add("int ");
         }else if(type == "varchar"){
             OutputBuffer.add("String ");
         }
-        OutputBuffer.add(attrs.get("id") + ";\n");
+        OutputBuffer.add(id + ";\n");
+        stack.get(stack.size() - 3).setAttr("columns", (columns == null ? id : columns + "," + id));
     }
 }
 
 class CreateTable implements ActionInterface{
     public void getFromParent(GrammaticalInterface parent, Map<String, String> attrs){ }
     public void act(Stack<GrammaticalInterface> stack, Map<String, String> attrs){
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>> EEEEEEEEEEENNNNDDDDDDDD");
+        OutputBuffer.add("public ");
+        OutputBuffer.add(attrs.get("className"));
+        OutputBuffer.add("(");
+        String[] columns = attrs.get("columns").split(",");
+        int columnNumber = 0;
+        for(String column : columns){
+            OutputBuffer.add(column);
+            columnNumber++;
+            if(columnNumber < columns.length){
+                OutputBuffer.add(", ");
+            }
+        }
+        OutputBuffer.add("){\n");
+        OutputBuffer.addIdentation();
+        for(String column : columns){
+            OutputBuffer.add("this." + column + " = " + column + ";\n");
+        }
+        OutputBuffer.rmIdentation();
+        OutputBuffer.add("}\n");
+        OutputBuffer.rmIdentation();
+        OutputBuffer.add("}\n");
     }
 }
 
