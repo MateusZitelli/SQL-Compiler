@@ -7,6 +7,6 @@ Address varchar(255),
 City varchar(255)
 )
 
-insert into primary_117 (P_id, LastName) values (1, "wow");
+insert into Persons (P_id, LastName) values (1, "wow");
 
-select * from primary_117;
+select * from Persons;

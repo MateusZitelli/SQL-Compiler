@@ -6,6 +6,7 @@ import Tokenizer.*;
 import GrammaticalElement.*;
 import Action.*;
 import Synthesized.*;
+import java.io.*;
 
 class OutputBuffer {
     public static ArrayList<String> buffer = new ArrayList<String>();
@@ -13,16 +14,52 @@ class OutputBuffer {
     public static void addIdentation (){
         identation += 1;
     }
+
     public static void rmIdentation (){
         identation -= 1;
     }
+
     public static void add(String output){
         StringBuffer b = new StringBuffer();
-        for(int i = 0; i < identation; i++){
-            b.append("  ");
+        if(buffer.size() > 0){
+            String lastString = buffer.get(buffer.size() - 1);
+            if(lastString.charAt(lastString.length() - 1) == '\n'){
+                for(int i = 0; i < identation; i++){
+                    b.append("  ");
+                }
+            }
         }
         buffer.add(b + output);
-        System.out.println(buffer);
+    }
+
+    public static void writeToFile(String filename, Integer trial){
+        File file = new File("./output/" + filename + (trial == null ? "" : trial) + ".java");
+
+        if(!file.getParentFile().exists()){
+            if (file.getParentFile().mkdir()) {
+                System.out.println("Output directory created.");
+            } else {
+                System.out.println("Failed to create output directory.");
+            }
+        }
+
+        if(file.exists()){
+            writeToFile(filename, trial == null ? 0 : trial + 1);
+            return;
+        }
+
+        try{
+            PrintWriter writer = new PrintWriter(file, "UTF-8");
+            for(String out: buffer){
+                writer.print(out);
+            }
+            writer.close();
+            buffer = new ArrayList<String>();
+        }catch(FileNotFoundException e){
+            System.out.println("Failed to create file.");
+        }catch(UnsupportedEncodingException e){
+            System.out.println("Failed to create file.");
+        }
     }
 }
 
@@ -187,6 +224,7 @@ class CreateTable implements ActionInterface{
         OutputBuffer.add("}\n");
         OutputBuffer.rmIdentation();
         OutputBuffer.add("}\n");
+        OutputBuffer.writeToFile(attrs.get("className"), null);
     }
 }
 
